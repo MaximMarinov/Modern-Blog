@@ -1,5 +1,19 @@
-export const SinglePost = () => {
+import styles from "./assets/css/SinglePost.module.css";
+
+export const SinglePost = ({post}) => {
     return (
-        <h1>SinglePost</h1>
-    )
-}
+        <li>
+            <figure className={styles["post__image"]}>
+                <img src={post.imageUrl} alt="" width={400} />
+            </figure>
+
+            <div className={styles["post__content"]}>
+                <h1>{post.title}</h1>
+
+                <p>{post.content}</p>
+
+                <i>{post.author}</i>
+            </div>
+        </li>
+    );
+};
