@@ -2,6 +2,7 @@ import styles from "./assets/css/Home.module.css";
 import { TopicsList } from "../posts/topics-list/TopicsList";
 import { ResearchList } from "../posts/research-list/ResearchList";
 import { IdeasList } from "../posts/ideas-list/IdeasList";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
     return (
@@ -36,8 +37,8 @@ export const Home = () => {
                     </h1>
 
                     <ul className={styles["services"]}>
-                        <a href="#" className={styles["service"]}>
-                            <li>
+                        <li className={styles["service"]}>
+                            <Link to="/topics">
                                 <figure className={styles["icon"]}>
                                     <img
                                         src={require("./assets/images/topics-icon.png")}
@@ -57,11 +58,11 @@ export const Home = () => {
                                     mollitia ut quam, error consectetur quo,
                                     unde asperiores est?
                                 </p>
-                            </li>
-                        </a>
+                            </Link>
+                        </li>
 
-                        <a href="#" className={styles["service"]}>
-                            <li>
+                        <li className={styles["service"]}>
+                            <Link to="/ideas">
                                 <figure className={styles["icon"]}>
                                     <img
                                         src={require("./assets/images/ideas-icon.png")}
@@ -81,11 +82,11 @@ export const Home = () => {
                                     mollitia ut quam, error consectetur quo,
                                     unde asperiores est?
                                 </p>
-                            </li>
-                        </a>
+                            </Link>
+                        </li>
 
-                        <a href="#" className={styles["service"]}>
-                            <li>
+                        <li className={styles["service"]}>
+                            <Link to="/research">
                                 <figure className={styles["icon"]}>
                                     <img
                                         src={require("./assets/images/research-icon.png")}
@@ -105,17 +106,11 @@ export const Home = () => {
                                     mollitia ut quam, error consectetur quo,
                                     unde asperiores est?
                                 </p>
-                            </li>
-                        </a>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </section>
-
-            {/* <section className="section-posts">
-                <div className="shell">
-                    <TopicsList />
-                </div>
-            </section> */}
         </>
     );
 };

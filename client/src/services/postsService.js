@@ -1,6 +1,7 @@
 import {
     collection,
     getDocs,
+    getDoc,
     addDoc,
     updateDoc,
     doc,
@@ -9,6 +10,12 @@ import {
 
 export const getPosts = async (collectionRef) => {
     const response = await getDocs(collectionRef);
+
+    return response.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+};
+
+export const getPost = async (postRef) => {
+    const response = await getDoc(postRef)
     
-    return response.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    return response.data()
 };

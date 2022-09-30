@@ -2,7 +2,7 @@ import styles from "./assets/css/SinglePost.module.css";
 
 export const SinglePost = ({post}) => {
     return (
-        <li>
+        <li className={styles['post']}>
             <figure className={styles["post__image"]}>
                 <img src={post.imageUrl} alt="" width={400} />
             </figure>

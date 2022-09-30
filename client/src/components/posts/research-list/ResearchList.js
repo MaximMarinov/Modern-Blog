@@ -4,6 +4,7 @@ import { collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import * as postService from "../../../services/postsService";
 import { db } from "../../../firebase-config";
+import { Link } from "react-router-dom";
 
 import { SinglePost } from "../single-post/SinglePost";
 
@@ -20,7 +21,11 @@ export const ResearchList = () => {
     return (
         <ul className={styles["post-list"]}>
             {posts.map((post) => {
-                return <SinglePost key={post.id} post={post} />;
+                return (
+                    <Link to={`/research/${post.id}`} key={post.id}>
+                        <SinglePost post={post} />
+                    </Link>
+                );
             })}
         </ul>
     );

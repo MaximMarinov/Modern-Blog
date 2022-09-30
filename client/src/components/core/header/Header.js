@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./assets/css/Header.module.css";
 
 export const Header = () => {
@@ -5,32 +6,48 @@ export const Header = () => {
         <header className={styles["header"]}>
             <div className={styles["header__inner"]}>
                 <figure className={styles["logo"]}>
-                    <a href="#">
+                    <Link to="/">
                         <img
                             src={require("./assets/images/logo.png")}
                             alt="logo"
                             width="500"
                             height="500"
                         />
-                    </a>
+                    </Link>
                 </figure>
 
                 <nav className={styles["nav"]}>
                     <ul>
                         <li>
-                            <a href="#">Home</a>
+                            <Link to="/">Home</Link>
                         </li>
 
                         <li>
-                            <a href="#">Topics</a>
+                            <Link to="/topics">Topics</Link>
+                        </li>
+                        
+                        <li>
+                            <Link to="/ideas">Ideas</Link>
                         </li>
 
                         <li>
-                            <a href="#">Sign In</a>
+                            <Link to="/research">Research</Link>
+                        </li>
+                        
+                        <li>
+                            <Link to="/create">Add Post</Link>
+                        </li>
+                        
+                        <li>
+                            <Link to="/login">Sign In</Link>
                         </li>
 
                         <li>
-                            <a href="#">Sign Up</a>
+                            <Link to="/register">Sign Up</Link>
+                        </li>
+
+                        <li>
+                            <Link to="/logout">Sign Out</Link>
                         </li>
                     </ul>
                 </nav>
