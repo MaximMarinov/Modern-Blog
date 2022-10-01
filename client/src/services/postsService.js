@@ -15,8 +15,19 @@ export const getPosts = async (collectionRef) => {
 };
 
 export const getPost = async (postRef) => {
-    const response = await getDoc(postRef)
-    
-    return response.data()
+    const response = await getDoc(postRef);
+
+    return response.data();
 };
 
+export const createPost = async (postCollectionRef, data) => {
+    await addDoc(postCollectionRef, data);
+};
+
+export const editPost = async (postRef, data) => {
+    await updateDoc(postRef, data);
+};
+
+export const deletePost = async (postRef) => {
+    await deleteDoc(postRef);
+};

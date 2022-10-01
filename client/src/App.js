@@ -40,7 +40,7 @@ function App() {
 
                 <Route path="/create" element={<CreatePost />} />
 
-                <Route path="/edit/:postId" element={<EditPost />} />
+                <Route path="/edit/:collectionRef/:postId" element={<EditPost />} />
 
                 <Route path="/login" element={<Login />} />
 

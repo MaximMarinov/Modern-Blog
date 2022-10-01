@@ -1,7 +1,9 @@
 import styles from "./assets/css/CreatePost.module.css";
 import { useState } from "react";
 import { db } from "../../../firebase-config";
-import { addDoc, collection } from "firebase/firestore";
+import {  collection } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import * as postService from "../../../services/postsService";
 
 export const CreatePost = () => {
     const [title, setTitle] = useState("");
@@ -9,6 +11,7 @@ export const CreatePost = () => {
     const [author, setAuthor] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [collectionVal, setCollectionVal] = useState("");
+    const navigate = useNavigate();
 
     const titleChangeHandler = (e) => {
         setTitle(e.target.value);
@@ -35,15 +38,15 @@ export const CreatePost = () => {
         
         const postCollectionRef = collection(db, collectionVal);
 
-        const createPost = async () => {
-            await addDoc(postCollectionRef, {
-                title,
-                content,
-                imageUrl,
-                author,
-            });
-        };
-        createPost();
+        postService.createPost(postCollectionRef, {
+            title,
+            content,
+            imageUrl,
+            author,
+            collectionVal
+        })
+
+        return navigate(`/${collectionVal}`) 
     };
 
     return (
@@ -99,7 +102,7 @@ export const CreatePost = () => {
                             type="text"
                             placeholder="Image Url"
                             onChange={collectionChangeHandler}
-                            value={collection}
+                            value={collectionVal}
                         >
                             <option value="topics">Topics</option>
                             <option value="ideas">Ideas</option>

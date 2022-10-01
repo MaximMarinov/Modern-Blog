@@ -1,17 +1,33 @@
 import styles from "./assets/css/EditPost.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../../firebase-config";
 import { updateDoc, collection, doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
+import * as postService from "../../../services/postsService";
+import { useNavigate } from "react-router-dom";
 
 export const EditPost = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [author, setAuthor] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-    const [collectionVal, setCollectionVal] = useState("");
 
-    const { postId } = useParams();
+    const [titleError, setTitleError] = useState("");
+    const [contentError, setContentError] = useState("");
+    const [authorError, setAuthorError] = useState("");
+    const [imageUrlError, setImageUrlError] = useState("");
+
+    const [currentPost, setCurrentPost] = useState({});
+
+    const { collectionRef, postId } = useParams();
+
+    const postRef = doc(db, collectionRef, postId);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        postService.getPost(postRef).then((post) => setCurrentPost(post));
+    }, []);
 
     const titleChangeHandler = (e) => {
         setTitle(e.target.value);
@@ -29,30 +45,45 @@ export const EditPost = () => {
         setImageUrl(e.target.value);
     };
 
-    const collectionChangeHandler = (e) => {
-        setCollectionVal(e.target.value);
+    const validateTitle = () => {
+        if (!title) {
+            setTitleError(true);
+        } else {
+            setTitleError(false);
+        }
+    };
+
+    const validateContent = () => {
+        if (!content) {
+            setContentError(true);
+        } else {
+            setContentError(false);
+        }
+    };
+
+    const validateAuthor = () => {
+        if (!author) {
+            setAuthorError(true);
+        } else {
+            setAuthorError(false);
+        }
+    };
+
+    const validateImageUrl = () => {
+        if (!imageUrl) {
+            setImageUrlError(true);
+        } else {
+            setImageUrlError(false);
+        }
     };
 
     const submitHandler = (e) => {
         e.preventDefault();
-        const updateUser = async (postId) => {
 
-            const postCollectionRef = collection(db, collectionVal);
+        postService.editPost(postRef, { title, content, author, imageUrl });
 
-            const currentUser = doc(db, postCollectionRef, postId);
-
-            await updateDoc(currentUser, {
-                title,
-                content,
-                imageUrl,
-                author,
-            });
-        };
-
-        updateUser(postId);
+        return navigate(`/${collectionRef}`);
     };
-
-    
 
     return (
         <div className="shell">
@@ -63,60 +94,84 @@ export const EditPost = () => {
                     onSubmit={submitHandler}
                 >
                     <div className={styles["form__head"]}>
-                        <h1>Add Post</h1>
+                        <h1>Edit Post</h1>
                     </div>
 
                     <div className={styles["field"]}>
                         <input
                             type="text"
-                            placeholder="Title"
+                            placeholder={`${currentPost.title}`}
                             onChange={titleChangeHandler}
                             value={title}
+                            onBlur={validateTitle}
+                            required
                         />
+                        {titleError && (
+                            <p className={styles["field__error"]}>
+                                Tittle is required!
+                            </p>
+                        )}
                     </div>
 
                     <div className={styles["field"]}>
                         <input
                             type="text"
-                            placeholder="Content"
+                            placeholder={`${currentPost.content}`}
                             onChange={contentChangeHandler}
                             value={content}
+                            onBlur={validateContent}
+                            required
                         />
+                        {contentError && (
+                            <p className={styles["field__error"]}>
+                                Content is required!
+                            </p>
+                        )}
                     </div>
 
                     <div className={styles["field"]}>
                         <input
                             type="text"
-                            placeholder="Author"
+                            placeholder={`${currentPost.author}`}
                             onChange={authorChangeHandler}
                             value={author}
+                            onBlur={validateAuthor}
+                            required
                         />
+                        {authorError && (
+                            <p className={styles["field__error"]}>
+                                Author is required!
+                            </p>
+                        )}
                     </div>
 
                     <div className={styles["field"]}>
                         <input
                             type="text"
-                            placeholder="Image Url"
+                            placeholder={`${currentPost.imageUrl}`}
                             onChange={imgChangeHandler}
                             value={imageUrl}
+                            onBlur={validateImageUrl}
+                            required
                         />
-                    </div>
 
-                    <div className={styles["field"]}>
-                        <select
-                            type="text"
-                            placeholder="Image Url"
-                            onChange={collectionChangeHandler}
-                            value={collection}
-                        >
-                            <option value="topics">Topics</option>
-                            <option value="ideas">Ideas</option>
-                            <option value="research">Research</option>
-                        </select>
+                        {imageUrlError && (
+                            <p className={styles["field__error"]}>
+                                Image Url is required!
+                            </p>
+                        )}
                     </div>
 
                     <div className={styles["form__actions"]}>
-                        <input type="submit" />
+                        <input
+                            type="submit"
+                            disabled={
+                                titleError ||
+                                contentError ||
+                                authorError ||
+                                imageUrlError
+                            }
+                        />
                     </div>
                 </form>
             </div>
