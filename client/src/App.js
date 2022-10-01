@@ -8,6 +8,7 @@ import { IdeasList } from "./components/posts/ideas-list/IdeasList";
 import { ResearchList } from "./components/posts/research-list/ResearchList";
 import { PostDetails } from "./components/posts/post-details/PostDetails";
 import { CreatePost } from "./components/posts/create-post/CreatePost";
+import { EditPost } from "./components/posts/edit-post/EditPost";
 import { Login } from "./components/auth/login/Login";
 import { Register } from "./components/auth/register/Register";
 
@@ -38,9 +39,11 @@ function App() {
                 />
 
                 <Route path="/create" element={<CreatePost />} />
-                
+
+                <Route path="/edit/:postId" element={<EditPost />} />
+
                 <Route path="/login" element={<Login />} />
-                
+
                 <Route path="/register" element={<Register />} />
             </Routes>
 

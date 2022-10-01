@@ -1,16 +1,14 @@
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import styles from "./assets/css/PostDetails.module.css";
 import { doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import * as postService from "../../../services/postsService";
 import { db } from "../../../firebase-config";
 
-export const PostDetails = ({collection}) => {
+export const PostDetails = ({ collection }) => {
     const { postId } = useParams();
-    const { pathname } = useLocation();
 
     const [currentPost, setCurrentPost] = useState({});
-
 
     useEffect(() => {
         const postRef = doc(db, collection, postId);
@@ -33,7 +31,7 @@ export const PostDetails = ({collection}) => {
             </div>
 
             <div className={styles["section__actions"]}>
-                <button>Edit</button>
+                <Link to={`/edit/${postId}`}>Edit</Link>
                 <button>Delete</button>
             </div>
         </section>

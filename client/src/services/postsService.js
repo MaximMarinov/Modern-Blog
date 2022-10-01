@@ -19,3 +19,4 @@ export const getPost = async (postRef) => {
     
     return response.data()
 };
+
