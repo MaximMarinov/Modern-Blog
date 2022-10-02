@@ -11,6 +11,13 @@ export const CreatePost = () => {
     const [author, setAuthor] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [collectionVal, setCollectionVal] = useState("");
+
+    const [titleError, setTitleError] = useState("");
+    const [contentError, setContentError] = useState("");
+    const [authorError, setAuthorError] = useState("");
+    const [imageUrlError, setImageUrlError] = useState("");
+    const [collectionValError, setCollectionValError] = useState("");
+
     const navigate = useNavigate();
 
     const titleChangeHandler = (e) => {
@@ -31,6 +38,46 @@ export const CreatePost = () => {
 
     const collectionChangeHandler = (e) => {
         setCollectionVal(e.target.value);
+    };
+
+    const validateTitle = () => {
+        if (!title) {
+            setTitleError(true);
+        } else {
+            setTitleError(false);
+        }
+    };
+
+    const validateContent = () => {
+        if (!content) {
+            setContentError(true);
+        } else {
+            setContentError(false);
+        }
+    };
+
+    const validateAuthor = () => {
+        if (!author) {
+            setAuthorError(true);
+        } else {
+            setAuthorError(false);
+        }
+    };
+
+    const validateImageUrl = () => {
+        if (!imageUrl) {
+            setImageUrlError(true);
+        } else {
+            setImageUrlError(false);
+        }
+    };
+
+    const validateCollectionVal = () => {
+        if (!collectionVal) {
+            setCollectionValError(true);
+        } else {
+            setCollectionValError(false);
+        }
     };
 
     const submitHandler = (e) => {
@@ -67,6 +114,7 @@ export const CreatePost = () => {
                             placeholder="Title"
                             onChange={titleChangeHandler}
                             value={title}
+                            onBlur={validateTitle}
                         />
                     </div>
 
@@ -76,6 +124,7 @@ export const CreatePost = () => {
                             placeholder="Content"
                             onChange={contentChangeHandler}
                             value={content}
+                            onBlur={validateContent}
                         />
                     </div>
 
@@ -85,6 +134,7 @@ export const CreatePost = () => {
                             placeholder="Author"
                             onChange={authorChangeHandler}
                             value={author}
+                            onBlur={validateAuthor}
                         />
                     </div>
 
@@ -94,6 +144,7 @@ export const CreatePost = () => {
                             placeholder="Image Url"
                             onChange={imgChangeHandler}
                             value={imageUrl}
+                            onBlur={validateImageUrl}
                         />
                     </div>
 
@@ -103,6 +154,7 @@ export const CreatePost = () => {
                             placeholder="Image Url"
                             onChange={collectionChangeHandler}
                             value={collectionVal}
+                            onBlur={validateCollectionVal}
                         >
                             <option value="topics">Topics</option>
                             <option value="ideas">Ideas</option>
