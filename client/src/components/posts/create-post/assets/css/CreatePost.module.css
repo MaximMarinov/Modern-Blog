@@ -15,8 +15,7 @@
     margin-top: 20px;
 }
 
-.field input,
-.form select {
+.field input {
     height: 30px;
     width: 400px;
 }
@@ -24,4 +23,9 @@
 .form__actions input {
     width: 100px;
     height: 30px;
+}
+
+.field__error {
+    color: #ff0000;
+    margin: 8px 0 15px;
 }

@@ -7,10 +7,19 @@ import * as postService from "../../../services/postsService";
 import { useNavigate } from "react-router-dom";
 
 export const EditPost = () => {
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [author, setAuthor] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
+    const [values, setValues] = useState({
+        title: "",
+        content: "",
+        author: "",
+        imageUrl: "",
+    });
+
+    const changeHandler = (e) => {
+        setValues((state) => ({
+            ...state,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     const [titleError, setTitleError] = useState("");
     const [contentError, setContentError] = useState("");
@@ -29,24 +38,8 @@ export const EditPost = () => {
         postService.getPost(postRef).then((post) => setCurrentPost(post));
     }, []);
 
-    const titleChangeHandler = (e) => {
-        setTitle(e.target.value);
-    };
-
-    const contentChangeHandler = (e) => {
-        setContent(e.target.value);
-    };
-
-    const authorChangeHandler = (e) => {
-        setAuthor(e.target.value);
-    };
-
-    const imgChangeHandler = (e) => {
-        setImageUrl(e.target.value);
-    };
-
     const validateTitle = () => {
-        if (!title) {
+        if (!values.title) {
             setTitleError(true);
         } else {
             setTitleError(false);
@@ -54,7 +47,7 @@ export const EditPost = () => {
     };
 
     const validateContent = () => {
-        if (!content) {
+        if (!values.content) {
             setContentError(true);
         } else {
             setContentError(false);
@@ -62,7 +55,7 @@ export const EditPost = () => {
     };
 
     const validateAuthor = () => {
-        if (!author) {
+        if (!values.author) {
             setAuthorError(true);
         } else {
             setAuthorError(false);
@@ -70,7 +63,7 @@ export const EditPost = () => {
     };
 
     const validateImageUrl = () => {
-        if (!imageUrl) {
+        if (!values.imageUrl) {
             setImageUrlError(true);
         } else {
             setImageUrlError(false);
@@ -80,7 +73,7 @@ export const EditPost = () => {
     const submitHandler = (e) => {
         e.preventDefault();
 
-        postService.editPost(postRef, { title, content, author, imageUrl });
+        postService.editPost(postRef, { ...values });
 
         return navigate(`/${collectionRef}`);
     };
@@ -100,9 +93,10 @@ export const EditPost = () => {
                     <div className={styles["field"]}>
                         <input
                             type="text"
+                            name="title"
                             placeholder={`${currentPost.title}`}
-                            onChange={titleChangeHandler}
-                            value={title}
+                            onChange={changeHandler}
+                            value={values.title}
                             onBlur={validateTitle}
                             required
                         />
@@ -116,9 +110,10 @@ export const EditPost = () => {
                     <div className={styles["field"]}>
                         <input
                             type="text"
+                            name="content"
                             placeholder={`${currentPost.content}`}
-                            onChange={contentChangeHandler}
-                            value={content}
+                            onChange={changeHandler}
+                            value={values.content}
                             onBlur={validateContent}
                             required
                         />
@@ -132,9 +127,10 @@ export const EditPost = () => {
                     <div className={styles["field"]}>
                         <input
                             type="text"
+                            name="author"
                             placeholder={`${currentPost.author}`}
-                            onChange={authorChangeHandler}
-                            value={author}
+                            onChange={changeHandler}
+                            value={values.author}
                             onBlur={validateAuthor}
                             required
                         />
@@ -148,9 +144,10 @@ export const EditPost = () => {
                     <div className={styles["field"]}>
                         <input
                             type="text"
+                            name="imageUrl"
                             placeholder={`${currentPost.imageUrl}`}
-                            onChange={imgChangeHandler}
-                            value={imageUrl}
+                            onChange={changeHandler}
+                            value={values.imageUrl}
                             onBlur={validateImageUrl}
                             required
                         />
