@@ -1,7 +1,7 @@
 import "./App.css";
 import { Header } from "./components/core/header/Header";
 import { Footer } from "./components/core/footer/Footer";
-import { Home } from "./components/home/Home";
+import { Home } from "./components/pages/home/Home";
 import { Routes, Route } from "react-router-dom";
 import { TopicsList } from "./components/posts/topics-list/TopicsList";
 import { IdeasList } from "./components/posts/ideas-list/IdeasList";
@@ -11,6 +11,7 @@ import { CreatePost } from "./components/posts/create-post/CreatePost";
 import { EditPost } from "./components/posts/edit-post/EditPost";
 import { Login } from "./components/auth/login/Login";
 import { Register } from "./components/auth/register/Register";
+import { NotFound } from "./components/pages/not-found/NotFound";
 
 function App() {
     return (
@@ -40,11 +41,16 @@ function App() {
 
                 <Route path="/create" element={<CreatePost />} />
 
-                <Route path="/edit/:collectionRef/:postId" element={<EditPost />} />
+                <Route
+                    path="/edit/:collectionRef/:postId"
+                    element={<EditPost />}
+                />
 
                 <Route path="/login" element={<Login />} />
 
                 <Route path="/register" element={<Register />} />
+
+                <Route path="/*" element={<NotFound />} />
             </Routes>
 
             <Footer />

@@ -15,7 +15,8 @@
     margin-top: 20px;
 }
 
-.field input, .form select {
+.field input,
+.form select {
     height: 30px;
     width: 400px;
 }

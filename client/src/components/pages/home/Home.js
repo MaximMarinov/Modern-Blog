@@ -1,7 +1,4 @@
 import styles from "./assets/css/Home.module.css";
-import { TopicsList } from "../posts/topics-list/TopicsList";
-import { ResearchList } from "../posts/research-list/ResearchList";
-import { IdeasList } from "../posts/ideas-list/IdeasList";
 import { Link } from "react-router-dom";
 
 export const Home = () => {

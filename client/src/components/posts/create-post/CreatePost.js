@@ -1,7 +1,7 @@
 import styles from "./assets/css/CreatePost.module.css";
 import { useState } from "react";
 import { db } from "../../../firebase-config";
-import {  collection } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import * as postService from "../../../services/postsService";
 
@@ -35,7 +35,7 @@ export const CreatePost = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        
+
         const postCollectionRef = collection(db, collectionVal);
 
         postService.createPost(postCollectionRef, {
@@ -43,10 +43,10 @@ export const CreatePost = () => {
             content,
             imageUrl,
             author,
-            collectionVal
-        })
+            collectionVal,
+        });
 
-        return navigate(`/${collectionVal}`) 
+        return navigate(`/${collectionVal}`);
     };
 
     return (

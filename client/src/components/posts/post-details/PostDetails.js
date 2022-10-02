@@ -1,6 +1,6 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styles from "./assets/css/PostDetails.module.css";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import * as postService from "../../../services/postsService";
 import { db } from "../../../firebase-config";
