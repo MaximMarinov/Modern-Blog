@@ -189,6 +189,7 @@ export const CreatePost = () => {
 
                     <div className={styles["form__actions"]}>
                         <input
+                            className="button submit"
                             type="submit"
                             disabled={
                                 titleError ||

@@ -1,7 +1,7 @@
 import styles from "./assets/css/EditPost.module.css";
 import { useEffect, useState } from "react";
 import { db } from "../../../firebase-config";
-import { updateDoc, collection, doc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import * as postService from "../../../services/postsService";
 import { useNavigate } from "react-router-dom";
@@ -161,6 +161,7 @@ export const EditPost = () => {
 
                     <div className={styles["form__actions"]}>
                         <input
+                            className="button submit"
                             type="submit"
                             disabled={
                                 titleError ||

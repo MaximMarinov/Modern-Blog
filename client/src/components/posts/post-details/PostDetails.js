@@ -30,17 +30,19 @@ export const PostDetails = ({ collection }) => {
                 <img src={currentPost.imageUrl} alt={currentPost.title} />
             </figure>
 
-            <div className={styles["section__content"]}>
-                <h1>{currentPost.title}</h1>
+            <div className="shell">
+                <div className={styles["section__content"]}>
+                    <h1>{currentPost.title}</h1>
 
-                <p>{currentPost.content}</p>
+                    <p>{currentPost.content}</p>
 
-                <i>{currentPost.author}</i>
-            </div>
+                    <i>{currentPost.author}</i>
+                </div>
 
-            <div className={styles["section__actions"]}>
-                <Link to={`/edit/${collection}/${postId}`}>Edit</Link>
-                <button onClick={deleteHandler}>Delete</button>
+                <div className={styles["section__actions"]}>
+                    <Link className="button" to={`/edit/${collection}/${postId}`}>Edit</Link>
+                    <a className="button delete" onClick={deleteHandler}>Delete</a>
+                </div>
             </div>
         </section>
     );

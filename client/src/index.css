@@ -35,3 +35,52 @@ code {
     max-width: 1280px;
     margin: auto;
 }
+
+/* ------------------------------------------------------------ *\
+    Modifiers
+\* ------------------------------------------------------------ */
+.button {
+    text-decoration: none;
+    color: #ffde59;
+    padding: 10px 20px;
+    border: solid 2px #ffde59;
+    background-color: #000;
+    min-width: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 30px;
+    transition: 0.2s;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.button:hover {
+    color: #000;
+    background-color: #ffde59;
+    transition: 0.2s;
+    border-color: #000;
+}
+
+.delete {
+    background-color: #000;
+    color: #dc143c;
+    border-color: #dc143c;
+}
+
+.delete:hover {
+    background-color: #dc143c;
+    color: #000;
+    border-color: #000;
+}
+
+.submit {
+    background-color: #000;
+    color: #32cd30;
+    border-color: #32cd30;
+}
+
+.submit:hover {
+    background-color: #32cd30;
+    color: #000;
+    border-color: #000;
+}
