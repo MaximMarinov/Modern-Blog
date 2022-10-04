@@ -15,7 +15,8 @@
     margin-top: 20px;
 }
 
-.field input {
+.field input,
+.field select {
     height: 30px;
     width: 400px;
 }

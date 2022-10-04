@@ -14,13 +14,6 @@ export const EditPost = () => {
         imageUrl: "",
     });
 
-    const changeHandler = (e) => {
-        setValues((state) => ({
-            ...state,
-            [e.target.name]: e.target.value,
-        }));
-    };
-
     const [titleError, setTitleError] = useState("");
     const [contentError, setContentError] = useState("");
     const [authorError, setAuthorError] = useState("");
@@ -30,13 +23,20 @@ export const EditPost = () => {
 
     const { collectionRef, postId } = useParams();
 
-    const postRef = doc(db, collectionRef, postId);
-
     const navigate = useNavigate();
 
     useEffect(() => {
         postService.getPost(postRef).then((post) => setCurrentPost(post));
     }, []);
+
+    const changeHandler = (e) => {
+        setValues((state) => ({
+            ...state,
+            [e.target.name]: e.target.value,
+        }));
+    };
+
+    const postRef = doc(db, collectionRef, postId);
 
     const validateTitle = () => {
         if (!values.title) {
@@ -82,7 +82,7 @@ export const EditPost = () => {
         <div className="shell">
             <div className={styles["form-box"]}>
                 <form
-                    action="POST"
+                    action="PUT"
                     className={styles["form"]}
                     onSubmit={submitHandler}
                 >
@@ -90,8 +90,10 @@ export const EditPost = () => {
                         <h1>Edit Post</h1>
                     </div>
 
+                    <label className={styles["form__label"]} htmlFor="title">Title</label>
                     <div className={styles["field"]}>
                         <input
+                            id="title"
                             type="text"
                             name="title"
                             placeholder={`${currentPost.title}`}
@@ -107,8 +109,10 @@ export const EditPost = () => {
                         )}
                     </div>
 
+                    <label className={styles["form__label"]} htmlFor="content">Content</label>
                     <div className={styles["field"]}>
                         <input
+                            id="content"
                             type="text"
                             name="content"
                             placeholder={`${currentPost.content}`}
@@ -124,8 +128,10 @@ export const EditPost = () => {
                         )}
                     </div>
 
+                    <label className={styles["form__label"]} htmlFor="author">Author</label>
                     <div className={styles["field"]}>
                         <input
+                            id="author"
                             type="text"
                             name="author"
                             placeholder={`${currentPost.author}`}
@@ -141,8 +147,10 @@ export const EditPost = () => {
                         )}
                     </div>
 
+                    <label className={styles["form__label"]} htmlFor="imageUrl">Image URL</label>
                     <div className={styles["field"]}>
                         <input
+                            id="imageUrl"
                             type="text"
                             name="imageUrl"
                             placeholder={`${currentPost.imageUrl}`}
@@ -154,7 +162,7 @@ export const EditPost = () => {
 
                         {imageUrlError && (
                             <p className={styles["field__error"]}>
-                                Image Url is required!
+                                Image URL is required!
                             </p>
                         )}
                     </div>

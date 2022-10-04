@@ -3,9 +3,7 @@ import { Header } from "./components/core/header/Header";
 import { Footer } from "./components/core/footer/Footer";
 import { Home } from "./components/pages/home/Home";
 import { Routes, Route } from "react-router-dom";
-import { TopicsList } from "./components/posts/topics-list/TopicsList";
-import { IdeasList } from "./components/posts/ideas-list/IdeasList";
-import { ResearchList } from "./components/posts/research-list/ResearchList";
+import { PostList } from "./components/posts/PostLists";
 import { PostDetails } from "./components/posts/post-details/PostDetails";
 import { CreatePost } from "./components/posts/create-post/CreatePost";
 import { EditPost } from "./components/posts/edit-post/EditPost";
@@ -21,19 +19,17 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
 
-                <Route path="/topics/" element={<TopicsList />} />
+                <Route path="/posts/:collectionPath" element={<PostList />} />
                 <Route
                     path="/topics/:postId"
                     element={<PostDetails collection={"topics"} />}
                 />
 
-                <Route path="/ideas" element={<IdeasList />} />
                 <Route
                     path="/ideas/:postId"
                     element={<PostDetails collection={"ideas"} />}
                 />
 
-                <Route path="/research" element={<ResearchList />} />
                 <Route
                     path="/research/:postId"
                     element={<PostDetails collection={"research"} />}

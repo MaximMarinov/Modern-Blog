@@ -28,3 +28,12 @@
     color: #ff0000;
     margin: 8px 0 15px;
 }
+
+.field {
+    margin-bottom: 20px;
+}
+
+.form__label {
+    display: block;
+    margin-bottom: 5px;
+}

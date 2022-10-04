@@ -175,6 +175,7 @@ export const CreatePost = () => {
                             onBlur={validateCollectionVal}
                             required
                         >
+                            <option value="" disabled={true}>Select collection</option>
                             <option value="topics">Topics</option>
                             <option value="ideas">Ideas</option>
                             <option value="research">Research</option>
