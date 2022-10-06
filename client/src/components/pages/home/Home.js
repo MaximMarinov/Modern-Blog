@@ -35,7 +35,7 @@ export const Home = () => {
 
                     <ul className={styles["services"]}>
                         <li className={styles["service"]}>
-                            <Link to="/topics">
+                            <Link to="posts/topics">
                                 <figure className={styles["icon"]}>
                                     <img
                                         src={require("./assets/images/topics-icon.png")}
@@ -59,7 +59,7 @@ export const Home = () => {
                         </li>
 
                         <li className={styles["service"]}>
-                            <Link to="/ideas">
+                            <Link to="posts/ideas">
                                 <figure className={styles["icon"]}>
                                     <img
                                         src={require("./assets/images/ideas-icon.png")}
@@ -83,7 +83,7 @@ export const Home = () => {
                         </li>
 
                         <li className={styles["service"]}>
-                            <Link to="/research">
+                            <Link to="posts/research">
                                 <figure className={styles["icon"]}>
                                     <img
                                         src={require("./assets/images/research-icon.png")}

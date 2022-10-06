@@ -8,8 +8,6 @@ export const PostList = () => {
 
     const posts = UseCollection(collectionPath);
 
-    console.log(posts);
-
     let title = "";
     let content = "";
 
@@ -69,7 +67,7 @@ export const PostList = () => {
                     {posts.map((post) => {
                         return (
                             <Link
-                                to={`/topics/${post.id}`}
+                                to={`/posts/${collectionPath}/${post.id}`}
                                 key={post.id}
                                 className={styles["post"]}
                             >

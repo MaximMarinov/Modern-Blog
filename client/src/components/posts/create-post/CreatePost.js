@@ -78,7 +78,7 @@ export const CreatePost = () => {
             ...values,
         });
 
-        return navigate(`/${values.collectionVal}`);
+        return navigate(`/posts/${values.collectionVal}`);
     };
 
     return (
@@ -93,8 +93,12 @@ export const CreatePost = () => {
                         <h1>Add Post</h1>
                     </div>
 
+                    <label className={styles["form__label"]} htmlFor="title">
+                        Title
+                    </label>
                     <div className={styles["field"]}>
                         <input
+                            id="title"
                             type="text"
                             name="title"
                             placeholder="Title"
@@ -111,8 +115,12 @@ export const CreatePost = () => {
                         </p>
                     )}
 
+                    <label className={styles["form__label"]} htmlFor="content">
+                        Content
+                    </label>
                     <div className={styles["field"]}>
                         <input
+                            id="content"
                             type="text"
                             name="content"
                             placeholder="Content"
@@ -129,8 +137,12 @@ export const CreatePost = () => {
                         </p>
                     )}
 
+                    <label className={styles["form__label"]} htmlFor="author">
+                        Author
+                    </label>
                     <div className={styles["field"]}>
                         <input
+                            id="author"
                             type="text"
                             name="author"
                             placeholder="Author"
@@ -147,8 +159,12 @@ export const CreatePost = () => {
                         </p>
                     )}
 
+                    <label className={styles["form__label"]} htmlFor="imageUrl">
+                        Image URL
+                    </label>
                     <div className={styles["field"]}>
                         <input
+                            id="imageUrl"
                             type="text"
                             name="imageUrl"
                             placeholder="Image Url"
@@ -165,8 +181,15 @@ export const CreatePost = () => {
                         </p>
                     )}
 
+                    <label
+                        className={styles["form__label"]}
+                        htmlFor="collectionVal"
+                    >
+                        Collection
+                    </label>
                     <div className={styles["field"]}>
                         <select
+                            id="collectionVal"
                             type="text"
                             name="collectionVal"
                             placeholder="Image Url"
@@ -175,7 +198,9 @@ export const CreatePost = () => {
                             onBlur={validateCollectionVal}
                             required
                         >
-                            <option value="" disabled={true}>Select collection</option>
+                            <option value="" disabled={true}>
+                                Select collection
+                            </option>
                             <option value="topics">Topics</option>
                             <option value="ideas">Ideas</option>
                             <option value="research">Research</option>

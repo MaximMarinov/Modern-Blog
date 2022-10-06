@@ -1,28 +1,24 @@
 import { Link, useParams } from "react-router-dom";
 import styles from "./assets/css/PostDetails.module.css";
-import { doc } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import * as postService from "../../../services/postsService";
-import { db } from "../../../firebase-config";
 import { useNavigate } from "react-router-dom";
+import { UseDoc } from "../../../hooks/useDoc";
+import { db } from "../../../firebase-config";
+import { doc } from "firebase/firestore";
 
-export const PostDetails = ({ collection }) => {
-    const { postId } = useParams();
+export const PostDetails = () => {
+    const { collectionPath, postId } = useParams();
 
-    const [currentPost, setCurrentPost] = useState({});
-
-    const postRef = doc(db, collection, postId);
+    const currentPost = UseDoc(collectionPath, postId);
 
     const navigate = useNavigate();
 
     const deleteHandler = () => {
+        const postRef = doc(db, collectionPath, postId);
+        
         postService.deletePost(postRef);
-        navigate(`/${collection}`);
+        navigate(`/posts/${collectionPath}`);
     };
-
-    useEffect(() => {
-        postService.getPost(postRef).then((post) => setCurrentPost(post));
-    }, []);
 
     return (
         <section className={styles["section-details"]}>
@@ -40,7 +36,7 @@ export const PostDetails = ({ collection }) => {
                 </div>
 
                 <div className={styles["section__actions"]}>
-                    <Link className="button" to={`/edit/${collection}/${postId}`}>Edit</Link>
+                    <Link className="button" to={`/edit/${collectionPath}/${postId}`}>Edit</Link>
                     <a className="button delete" onClick={deleteHandler}>Delete</a>
                 </div>
             </div>

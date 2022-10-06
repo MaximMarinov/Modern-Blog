@@ -11,9 +11,13 @@ export const UseCollection = (collectionPath) => {
     const collectionRef = collection(db, collectionPath);
 
     useEffect(() => {
+        setIsLoading(true);
         postService
             .getPosts(collectionRef)
-            .then((collection) => setData(collection));
+            .then((collection) => {
+                setIsLoading(false)
+                setData(collection)
+            });
     }, [collectionPath]);
 
     return data

@@ -1,7 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../../../contexts/AuthContext";
 import styles from "./assets/css/Header.module.css";
 
 export const Header = () => {
+    const { user, logout } = UserAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate("/");
+            console.log("You are logged out");
+        } catch (e) {
+            console.log(e.message);
+        }
+    };
+
     return (
         <header className={styles["header"]}>
             <div className={styles["header__inner"]}>
@@ -23,32 +37,44 @@ export const Header = () => {
                         </li>
 
                         <li>
-                            <Link to="/topics">Topics</Link>
+                            <Link to="/posts/topics">Topics</Link>
                         </li>
 
                         <li>
-                            <Link to="/ideas">Ideas</Link>
+                            <Link to="/posts/ideas">Ideas</Link>
                         </li>
 
                         <li>
-                            <Link to="/research">Research</Link>
+                            <Link to="/posts/research">Research</Link>
                         </li>
 
-                        <li>
-                            <Link to="/create">Add Post</Link>
-                        </li>
+                        {user && user.email ? (
+                            <>
+                                <li>
+                                    <Link to="/create">Add Post</Link>
+                                </li>
 
-                        <li>
-                            <Link to="/login">Sign In</Link>
-                        </li>
+                                <li>
+                                    <Link to="/profile">{user.email}</Link>
+                                </li>
 
-                        <li>
-                            <Link to="/register">Sign Up</Link>
-                        </li>
+                                <li>
+                                    <Link to="/logout" onClick={handleLogout}>
+                                        Sign Out
+                                    </Link>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to="/login">Sign In</Link>
+                                </li>
 
-                        <li>
-                            <Link to="/logout">Sign Out</Link>
-                        </li>
+                                <li>
+                                    <Link to="/register">Sign Up</Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </nav>
             </div>

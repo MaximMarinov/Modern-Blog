@@ -1,10 +1,11 @@
 import styles from "./assets/css/EditPost.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { db } from "../../../firebase-config";
 import { doc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import * as postService from "../../../services/postsService";
 import { useNavigate } from "react-router-dom";
+import { UseDoc } from "../../../hooks/useDoc";
 
 export const EditPost = () => {
     const [values, setValues] = useState({
@@ -19,15 +20,11 @@ export const EditPost = () => {
     const [authorError, setAuthorError] = useState("");
     const [imageUrlError, setImageUrlError] = useState("");
 
-    const [currentPost, setCurrentPost] = useState({});
-
-    const { collectionRef, postId } = useParams();
+    const { collectionPath, postId } = useParams();
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        postService.getPost(postRef).then((post) => setCurrentPost(post));
-    }, []);
+    const currentPost = UseDoc(collectionPath, postId);
 
     const changeHandler = (e) => {
         setValues((state) => ({
@@ -36,7 +33,7 @@ export const EditPost = () => {
         }));
     };
 
-    const postRef = doc(db, collectionRef, postId);
+    const postRef = doc(db, collectionPath, postId);
 
     const validateTitle = () => {
         if (!values.title) {
@@ -75,7 +72,7 @@ export const EditPost = () => {
 
         postService.editPost(postRef, { ...values });
 
-        return navigate(`/${collectionRef}`);
+        return navigate(`/posts/${collectionPath}`);
     };
 
     return (
@@ -90,7 +87,9 @@ export const EditPost = () => {
                         <h1>Edit Post</h1>
                     </div>
 
-                    <label className={styles["form__label"]} htmlFor="title">Title</label>
+                    <label className={styles["form__label"]} htmlFor="title">
+                        Title
+                    </label>
                     <div className={styles["field"]}>
                         <input
                             id="title"
@@ -109,7 +108,9 @@ export const EditPost = () => {
                         )}
                     </div>
 
-                    <label className={styles["form__label"]} htmlFor="content">Content</label>
+                    <label className={styles["form__label"]} htmlFor="content">
+                        Content
+                    </label>
                     <div className={styles["field"]}>
                         <input
                             id="content"
@@ -128,7 +129,9 @@ export const EditPost = () => {
                         )}
                     </div>
 
-                    <label className={styles["form__label"]} htmlFor="author">Author</label>
+                    <label className={styles["form__label"]} htmlFor="author">
+                        Author
+                    </label>
                     <div className={styles["field"]}>
                         <input
                             id="author"
@@ -147,7 +150,9 @@ export const EditPost = () => {
                         )}
                     </div>
 
-                    <label className={styles["form__label"]} htmlFor="imageUrl">Image URL</label>
+                    <label className={styles["form__label"]} htmlFor="imageUrl">
+                        Image URL
+                    </label>
                     <div className={styles["field"]}>
                         <input
                             id="imageUrl"
