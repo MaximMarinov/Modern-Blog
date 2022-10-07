@@ -5,6 +5,7 @@ import {
     updateDoc,
     deleteDoc,
 } from "firebase/firestore";
+import { auth } from "../firebase-config";
 
 export const getPosts = async (collectionRef) => {
     const response = await getDocs(collectionRef);

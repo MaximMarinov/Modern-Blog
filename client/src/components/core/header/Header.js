@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
+import { UseDoc } from "../../../hooks/useDoc";
 import styles from "./assets/css/Header.module.css";
 
 export const Header = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+
+    // const currentUser = UseDoc('users', user?.uid)
 
     const handleLogout = async () => {
         try {
@@ -47,14 +50,14 @@ export const Header = () => {
                             <Link to="/posts/research">Research</Link>
                         </li>
 
-                        {user && user.email ? (
+                        {user && user?.email ? (
                             <>
                                 <li>
                                     <Link to="/create">Add Post</Link>
                                 </li>
 
                                 <li>
-                                    <Link to="/profile">{user.email}</Link>
+                                    <Link to="/profile">{user?.email}</Link>
                                 </li>
 
                                 <li>
