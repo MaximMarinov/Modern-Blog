@@ -4,7 +4,7 @@ import * as userService from "../../../services/userService";
 import { collection } from "firebase/firestore";
 import { db } from "../../../firebase-config";
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../hooks/useAuth";
 
 export const Register = () => {
     const [name, setName] = useState("");
@@ -21,7 +21,7 @@ export const Register = () => {
 
     const navigate = useNavigate();
 
-    const { signUp } = UserAuth();
+    const { signUp } = useAuth();
 
     const validateName = () => {
         if (!name) {
@@ -76,6 +76,7 @@ export const Register = () => {
         if (password === rePass) {
             try {
                 await signUp(email, password);
+                await userService.registerUser(userData)
                 navigate("/profile");
             } catch (e) {
                 console.log(e.message);

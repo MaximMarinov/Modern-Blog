@@ -1,16 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import { UserAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../hooks/useAuth";
 import styles from "./assets/css/Header.module.css";
 
 export const Header = () => {
-    const { user, logout } = UserAuth();
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
             await logout();
             navigate("/");
-            console.log("You are logged out");
         } catch (e) {
             console.log(e.message);
         }

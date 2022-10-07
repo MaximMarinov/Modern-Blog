@@ -1,7 +1,7 @@
-import { UserAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../hooks/useAuth";
 
 export const Profile = () => {
-    const { user } = UserAuth();
+    const { user } = useAuth();
 
     return (
         <h1>Hi, {user.email}</h1>

@@ -5,17 +5,19 @@ import { useNavigate } from "react-router-dom";
 import { UseDoc } from "../../../hooks/useDoc";
 import { db } from "../../../firebase-config";
 import { doc } from "firebase/firestore";
+import { useAuth } from "../../../hooks/useAuth";
 
 export const PostDetails = () => {
     const { collectionPath, postId } = useParams();
+    const navigate = useNavigate();
+
+    const { user } = useAuth();
 
     const currentPost = UseDoc(collectionPath, postId);
 
-    const navigate = useNavigate();
-
     const deleteHandler = () => {
         const postRef = doc(db, collectionPath, postId);
-        
+
         postService.deletePost(postRef);
         navigate(`/posts/${collectionPath}`);
     };
@@ -35,10 +37,19 @@ export const PostDetails = () => {
                     <i>{currentPost.author}</i>
                 </div>
 
-                <div className={styles["section__actions"]}>
-                    <Link className="button" to={`/edit/${collectionPath}/${postId}`}>Edit</Link>
-                    <a className="button delete" onClick={deleteHandler}>Delete</a>
-                </div>
+                {user && user?.uid == currentPost.ownerId ? (
+                    <div className={styles["section__actions"]}>
+                        <Link
+                            className="button"
+                            to={`/edit/${collectionPath}/${postId}`}
+                        >
+                            Edit
+                        </Link>
+                        <a className="button delete" onClick={deleteHandler}>
+                            Delete
+                        </a>
+                    </div>
+                ) : null}
             </div>
         </section>
     );

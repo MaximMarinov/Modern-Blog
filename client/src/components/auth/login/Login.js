@@ -1,7 +1,7 @@
 import styles from "./assets/css/Login.module.css";
 import { useState } from "react";
-import { UserAuth } from "../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../hooks/useAuth";
 
 export const Login = () => {
     const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ export const Login = () => {
 
     const navigate = useNavigate()
 
-    const { signIn } = UserAuth();
+    const { signIn } = useAuth();
 
     const validateEmail = () => {
         if (!email) {

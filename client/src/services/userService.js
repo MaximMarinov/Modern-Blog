@@ -6,8 +6,9 @@ import {
     deleteDoc,
     doc,
     setDoc,
+    collection,
 } from "firebase/firestore";
-import { db } from "../firebase-config";
+import { auth, db } from "../firebase-config";
 
 export const getUsers = async (collectionRef) => {
     const response = await getDocs(collectionRef);
@@ -15,25 +16,23 @@ export const getUsers = async (collectionRef) => {
     return response.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 };
 
-export const getUser = async (postRef) => {
-    const response = await getDoc(postRef);
+export const getUser = async (userRef) => {
+    const response = await getDoc(userRef);
 
     return response.data();
 };
 
-export const registerUser = async (user, data) => {
-    if (!user) {
-        return;
-    }
+export const registerUser = (data) => {
+    const currentUser = auth.currentUser;
+    const uid = currentUser.uid;
+    const docRef = doc(db, 'users', uid)
 
-    db.collection("users").doc(user).set({
-        data,
-    });
+    return setDoc(docRef, data);
 };
 
-// export const editPost = async (postRef, data) => {
-//     await updateDoc(postRef, data);
-// };
+export const updateUser = async (userRef, data) => {
+    await updateDoc(userRef, data);
+};
 
 // export const deletePost = async (postRef) => {
 //     await deleteDoc(postRef);

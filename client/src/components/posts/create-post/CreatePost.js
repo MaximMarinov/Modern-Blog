@@ -1,6 +1,6 @@
 import styles from "./assets/css/CreatePost.module.css";
 import { useState } from "react";
-import { db } from "../../../firebase-config";
+import { auth, db } from "../../../firebase-config";
 import { collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import * as postService from "../../../services/postsService";
@@ -13,6 +13,9 @@ export const CreatePost = () => {
         imageUrl: "",
         collectionVal: "",
     });
+
+    const currUserUid = auth.currentUser?.uid;
+
 
     const changeHandler = (e) => {
         setValues((state) => ({
@@ -69,14 +72,19 @@ export const CreatePost = () => {
         }
     };
 
+    const postData = {
+        ...values,
+        ownerId: currUserUid
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
 
         const postCollectionRef = collection(db, values.collectionVal);
 
         postService.createPost(postCollectionRef, {
-            ...values,
-        });
+            ...postData
+        })
 
         return navigate(`/posts/${values.collectionVal}`);
     };

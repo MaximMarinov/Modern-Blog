@@ -19,7 +19,8 @@ export const getPost = async (postRef) => {
 };
 
 export const createPost = async (postCollectionRef, data) => {
-    await addDoc(postCollectionRef, data);
+    const result = await addDoc(postCollectionRef, data);
+    return result;
 };
 
 export const editPost = async (postRef, data) => {
