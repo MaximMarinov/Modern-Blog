@@ -5,10 +5,12 @@ import { useAuth } from "../../../hooks/useAuth";
 import { UseDoc } from "../../../hooks/useDoc";
 import { UseUser } from "../../../hooks/useUser";
 import * as userService from "../../../services/userService";
+import { SinglePost } from "../../posts/single-post/SinglePost";
+
 export const Profile = () => {
     const { uid } = useAuth();
 
-    const currentUser = UseUser(uid)
+    const currentUser = UseUser(uid);
 
     return (
         <>

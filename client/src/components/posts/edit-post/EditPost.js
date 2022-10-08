@@ -8,16 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { UseDoc } from "../../../hooks/useDoc";
 
 export const EditPost = () => {
-    const [values, setValues] = useState({
-        title: "",
-        content: "",
-        author: "",
-        imageUrl: "",
-    });
-
     const [titleError, setTitleError] = useState("");
     const [contentError, setContentError] = useState("");
-    const [authorError, setAuthorError] = useState("");
     const [imageUrlError, setImageUrlError] = useState("");
 
     const { collectionPath, postId } = useParams();
@@ -26,17 +18,10 @@ export const EditPost = () => {
 
     const currentPost = UseDoc(collectionPath, postId);
 
-    const changeHandler = (e) => {
-        setValues((state) => ({
-            ...state,
-            [e.target.name]: e.target.value,
-        }));
-    };
-
     const postRef = doc(db, collectionPath, postId);
 
     const validateTitle = () => {
-        if (!values.title) {
+        if (!currentPost.title) {
             setTitleError(true);
         } else {
             setTitleError(false);
@@ -44,23 +29,15 @@ export const EditPost = () => {
     };
 
     const validateContent = () => {
-        if (!values.content) {
+        if (!currentPost.content) {
             setContentError(true);
         } else {
             setContentError(false);
         }
     };
 
-    const validateAuthor = () => {
-        if (!values.author) {
-            setAuthorError(true);
-        } else {
-            setAuthorError(false);
-        }
-    };
-
     const validateImageUrl = () => {
-        if (!values.imageUrl) {
+        if (!currentPost.imageUrl) {
             setImageUrlError(true);
         } else {
             setImageUrlError(false);
@@ -69,8 +46,9 @@ export const EditPost = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        const gameData = Object.fromEntries(new FormData(e.target));
 
-        postService.editPost(postRef, { ...values });
+        postService.editPost(postRef, { ...gameData });
 
         return navigate(`/posts/${collectionPath}`);
     };
@@ -95,9 +73,7 @@ export const EditPost = () => {
                             id="title"
                             type="text"
                             name="title"
-                            placeholder={`${currentPost.title}`}
-                            onChange={changeHandler}
-                            value={values.title}
+                            defaultValue={currentPost.title}
                             onBlur={validateTitle}
                             required
                         />
@@ -116,36 +92,13 @@ export const EditPost = () => {
                             id="content"
                             type="text"
                             name="content"
-                            placeholder={`${currentPost.content}`}
-                            onChange={changeHandler}
-                            value={values.content}
+                            defaultValue={currentPost.content}
                             onBlur={validateContent}
                             required
                         />
                         {contentError && (
                             <p className={styles["field__error"]}>
                                 Content is required!
-                            </p>
-                        )}
-                    </div>
-
-                    <label className={styles["form__label"]} htmlFor="author">
-                        Author
-                    </label>
-                    <div className={styles["field"]}>
-                        <input
-                            id="author"
-                            type="text"
-                            name="author"
-                            placeholder={`${currentPost.author}`}
-                            onChange={changeHandler}
-                            value={values.author}
-                            onBlur={validateAuthor}
-                            required
-                        />
-                        {authorError && (
-                            <p className={styles["field__error"]}>
-                                Author is required!
                             </p>
                         )}
                     </div>
@@ -158,9 +111,7 @@ export const EditPost = () => {
                             id="imageUrl"
                             type="text"
                             name="imageUrl"
-                            placeholder={`${currentPost.imageUrl}`}
-                            onChange={changeHandler}
-                            value={values.imageUrl}
+                            defaultValue={currentPost.imageUrl}
                             onBlur={validateImageUrl}
                             required
                         />
@@ -177,10 +128,7 @@ export const EditPost = () => {
                             className="button submit"
                             type="submit"
                             disabled={
-                                titleError ||
-                                contentError ||
-                                authorError ||
-                                imageUrlError
+                                titleError || contentError || imageUrlError
                             }
                         />
                     </div>

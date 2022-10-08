@@ -10,7 +10,6 @@ import { UseUser } from "../hooks/useUser";
 import * as userService from "../services/userService";
 import { doc } from "firebase/firestore";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -27,6 +26,7 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     const logout = () => {
+        localStorage.clear()
         return signOut(auth);
     };
 

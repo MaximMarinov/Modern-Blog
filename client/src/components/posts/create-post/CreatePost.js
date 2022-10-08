@@ -4,18 +4,21 @@ import { auth, db } from "../../../firebase-config";
 import { collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import * as postService from "../../../services/postsService";
+import * as userService from "../../../services/userService";
+import { useAuth } from "../../../hooks/useAuth";
+import { UseUser } from "../../../hooks/useUser";
 
 export const CreatePost = () => {
+    const { uid } = useAuth();
+
+    const currentUser = UseUser(uid);
+
     const [values, setValues] = useState({
         title: "",
         content: "",
-        author: "",
         imageUrl: "",
         collectionVal: "",
     });
-
-    const currUserUid = auth.currentUser?.uid;
-
 
     const changeHandler = (e) => {
         setValues((state) => ({
@@ -26,7 +29,6 @@ export const CreatePost = () => {
 
     const [titleError, setTitleError] = useState("");
     const [contentError, setContentError] = useState("");
-    const [authorError, setAuthorError] = useState("");
     const [imageUrlError, setImageUrlError] = useState("");
     const [collectionValError, setCollectionValError] = useState("");
 
@@ -48,14 +50,6 @@ export const CreatePost = () => {
         }
     };
 
-    const validateAuthor = () => {
-        if (!values.author) {
-            setAuthorError(true);
-        } else {
-            setAuthorError(false);
-        }
-    };
-
     const validateImageUrl = () => {
         if (!values.imageUrl) {
             setImageUrlError(true);
@@ -74,8 +68,9 @@ export const CreatePost = () => {
 
     const postData = {
         ...values,
-        ownerId: currUserUid
-    }
+        author: currentUser.name,
+        ownerId: uid,
+    };
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -83,8 +78,10 @@ export const CreatePost = () => {
         const postCollectionRef = collection(db, values.collectionVal);
 
         postService.createPost(postCollectionRef, {
-            ...postData
-        })
+            ...postData,
+        }).then(post => {
+            userService.addPostToUser(post)
+        });
 
         return navigate(`/posts/${values.collectionVal}`);
     };
@@ -142,28 +139,6 @@ export const CreatePost = () => {
                     {contentError && (
                         <p className={styles["field__error"]}>
                             Content is required!
-                        </p>
-                    )}
-
-                    <label className={styles["form__label"]} htmlFor="author">
-                        Author
-                    </label>
-                    <div className={styles["field"]}>
-                        <input
-                            id="author"
-                            type="text"
-                            name="author"
-                            placeholder="Author"
-                            onChange={changeHandler}
-                            value={values.author}
-                            onBlur={validateAuthor}
-                            required
-                        />
-                    </div>
-
-                    {authorError && (
-                        <p className={styles["field__error"]}>
-                            Author is required!
                         </p>
                     )}
 
@@ -226,10 +201,7 @@ export const CreatePost = () => {
                             className="button submit"
                             type="submit"
                             disabled={
-                                titleError ||
-                                contentError ||
-                                authorError ||
-                                imageUrlError
+                                titleError || contentError || imageUrlError
                             }
                         />
                     </div>
