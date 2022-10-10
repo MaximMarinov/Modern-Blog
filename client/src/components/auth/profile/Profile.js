@@ -1,15 +1,9 @@
-import { doc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { auth, db } from "../../../firebase-config";
+import { useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
-import { UseDoc } from "../../../hooks/useDoc";
 import { UseUser } from "../../../hooks/useUser";
-import * as userService from "../../../services/userService";
-import { SinglePost } from "../../posts/single-post/SinglePost";
 
 export const Profile = () => {
     const { uid } = useAuth();
-
     const currentUser = UseUser(uid);
 
     return (
@@ -17,6 +11,9 @@ export const Profile = () => {
             <img src={currentUser.profilePicUrl} alt="" />
             <h1>Hi, {currentUser.name}</h1>
             <h2>Email: {currentUser.email}</h2>
+            {currentUser.posts?.length > 0 ? (
+                <p>Posts: {currentUser.posts?.length}</p>
+            ) : null}
         </>
     );
 };

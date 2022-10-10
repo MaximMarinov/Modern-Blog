@@ -67,7 +67,6 @@ export const Register = () => {
         name,
         profilePicUrl,
         email,
-        posts: [],
     };
 
     const submitHandler = async (e) => {

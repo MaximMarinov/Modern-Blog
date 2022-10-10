@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import styles from "./assets/css/PostDetails.module.css";
 import * as postService from "../../../services/postsService";
+import * as userService from "../../../services/userService";
 import { useNavigate } from "react-router-dom";
 import { UseDoc } from "../../../hooks/useDoc";
 import { db } from "../../../firebase-config";
@@ -19,6 +20,7 @@ export const PostDetails = () => {
         const postRef = doc(db, collectionPath, postId);
 
         postService.deletePost(postRef);
+        userService.deletePostUser(postRef)
         navigate(`/posts/${collectionPath}`);
     };
 
