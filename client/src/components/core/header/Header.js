@@ -1,13 +1,15 @@
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../../../firebase-config";
 import { useAuth } from "../../../hooks/useAuth";
 import { UseDoc } from "../../../hooks/useDoc";
+import { UseUser } from "../../../hooks/useUser";
 import styles from "./assets/css/Header.module.css";
+import * as userService from "../../../services/userService";
 
 export const Header = () => {
-    const { user, logout } = useAuth();
+    const {user, uid, logout } = useAuth();
     const navigate = useNavigate();
-
-    // const currentUser = UseDoc('users', user?.uid)
 
     const handleLogout = async () => {
         try {
@@ -57,7 +59,7 @@ export const Header = () => {
                                 </li>
 
                                 <li>
-                                    <Link to="/profile">{user?.email}</Link>
+                                    <Link to="/profile">Profile</Link>
                                 </li>
 
                                 <li>

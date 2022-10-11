@@ -20,7 +20,13 @@ export const getUsers = async (collectionRef) => {
     return response.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 };
 
-export const getUser = async (userRef) => {
+export const getUser = async () => {
+    const currentUser = auth.currentUser;
+
+    const uid = currentUser?.uid;
+
+    const userRef = doc(db, "users", uid);
+
     const response = await getDoc(userRef);
 
     return response.data();

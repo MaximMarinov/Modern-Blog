@@ -1,0 +1,40 @@
+.form {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.form__head {
+    margin-bottom: 20px;
+}
+
+.form .field + .field {
+    margin-top: 20px;
+}
+
+.form__actions {
+    margin-top: 20px;
+}
+
+.field input,
+.field select {
+    height: 30px;
+    width: 400px;
+}
+
+.form__actions input {
+    width: 100px;
+}
+
+.field__error {
+    color: #ff0000;
+    margin: 8px 0 15px;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+.form__label {
+    display: block;
+    margin-bottom: 5px;
+}

@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import * as userService from "../services/userService";
 import { auth, db } from "../firebase-config";
-import { doc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useAuth } from "./useAuth";
 
-export const UseUser = (userId) => {
+export const UseUser = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState([]);
+    const { uid } = useAuth();
 
-
-    const userRef = doc(db, 'users', userId);
-
+    const userRef = doc(db, "users", uid);
+    
     useEffect(() => {
         setIsLoading(true);
-        userService.getUser(userRef).then((doc) => {
-            setIsLoading(false)
-            setData(doc)
+        onSnapshot(userRef, (snapshot) => {
+            setData(snapshot?.data());
         });
     }, []);
 
