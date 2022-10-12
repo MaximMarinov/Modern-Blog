@@ -5,20 +5,25 @@ import { db } from "../firebase-config"
 
 export const UseCollection = (collectionPath) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+    const [hasError, setHasError] = useState(false);
     const [data, setData] = useState([]);
 
     const collectionRef = collection(db, collectionPath);
 
     useEffect(() => {
         setIsLoading(true);
-        postService
+        try {
+            postService
             .getPosts(collectionRef)
             .then((collection) => {
                 setIsLoading(false)
                 setData(collection)
             });
+        } catch (error) {
+            setHasError(true)
+        }
+        
     }, [collectionPath]);
 
-    return data
+    return {data, isLoading, hasError}
 };

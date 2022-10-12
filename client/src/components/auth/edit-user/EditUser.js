@@ -15,6 +15,8 @@ export const EditUser = ({ editModeToggle }) => {
     const [profilePicUrlError, setProfilePicUrlError] = useState("");
     const [emailError, setEmailError] = useState("");
 
+    const [editProfileError, setEditProfileError] = useState("");
+
     const navigate = useNavigate();
 
     const { update } = useAuth();
@@ -28,18 +30,22 @@ export const EditUser = ({ editModeToggle }) => {
     };
 
     const validateProfilePicUrl = () => {
-        if (!profilePicUrlError) {
-            setProfilePicUrlError(true);
-        } else {
+        const pattern =
+            /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png|webp|avif|gif|svg)/;
+        if (pattern.test(profilePicUrl)) {
             setProfilePicUrlError(false);
+        } else {
+            setProfilePicUrlError(true);
         }
     };
 
     const validateEmail = () => {
-        if (!email) {
-            setEmailError(true);
-        } else {
+        const pattern =
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (pattern.test(email)) {
             setEmailError(false);
+        } else {
+            setEmailError(true);
         }
     };
 
@@ -54,12 +60,13 @@ export const EditUser = ({ editModeToggle }) => {
 
         try {
             await update(email);
-            await userService.updateUser(userData);
-            editModeToggle();
-            navigate("/profile");
-        } catch (e) {
-            console.error(e.message);
+        } catch (error) {
+            setEditProfileError(e.message);
+            return;
         }
+        await userService.updateUser(userData);
+        editModeToggle();
+        navigate("/profile");
     };
 
     return (
@@ -110,9 +117,9 @@ export const EditUser = ({ editModeToggle }) => {
                             onBlur={validateProfilePicUrl}
                             required
                         />
-                        {nameError && (
+                        {profilePicUrlError && (
                             <p className={styles["field__error"]}>
-                                Profile Picture URL is required!
+                                Enter a valid Profile Picture URL!
                             </p>
                         )}
                     </div>
@@ -132,7 +139,7 @@ export const EditUser = ({ editModeToggle }) => {
                         />
                         {emailError && (
                             <p className={styles["field__error"]}>
-                                Email is required!
+                                Enter a valid email address!
                             </p>
                         )}
                     </div>

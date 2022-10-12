@@ -11,7 +11,7 @@ import { UseUser } from "../../../hooks/useUser";
 export const CreatePost = () => {
     const { uid } = useAuth();
 
-    const currentUser = UseUser(uid);
+    const currentUser = UseUser();
 
     const [values, setValues] = useState({
         title: "",
@@ -35,7 +35,7 @@ export const CreatePost = () => {
     const navigate = useNavigate();
 
     const validateTitle = () => {
-        if (!values.title) {
+        if (values.title.length < 5) {
             setTitleError(true);
         } else {
             setTitleError(false);
@@ -43,7 +43,7 @@ export const CreatePost = () => {
     };
 
     const validateContent = () => {
-        if (!values.content) {
+        if (values.content.length < 20) {
             setContentError(true);
         } else {
             setContentError(false);
@@ -51,10 +51,12 @@ export const CreatePost = () => {
     };
 
     const validateImageUrl = () => {
-        if (!values.imageUrl) {
-            setImageUrlError(true);
-        } else {
+        const pattern =
+            /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png|webp|avif|gif|svg)/;
+        if (pattern.test(values.imageUrl)) {
             setImageUrlError(false);
+        } else {
+            setImageUrlError(true);
         }
     };
 
@@ -68,7 +70,7 @@ export const CreatePost = () => {
 
     const postData = {
         ...values,
-        author: currentUser.name,
+        author: currentUser.data.name,
         ownerId: uid,
     };
 
@@ -77,11 +79,13 @@ export const CreatePost = () => {
 
         const postCollectionRef = collection(db, values.collectionVal);
 
-        postService.createPost(postCollectionRef, {
-            ...postData,
-        }).then(post => {
-            userService.addPostToUser(post)
-        });
+        postService
+            .createPost(postCollectionRef, {
+                ...postData,
+            })
+            .then((post) => {
+                userService.addPostToUser(post);
+            });
 
         return navigate(`/posts/${values.collectionVal}`);
     };
@@ -116,7 +120,7 @@ export const CreatePost = () => {
 
                     {titleError && (
                         <p className={styles["field__error"]}>
-                            Tittle is required!
+                            Title must be atleast 5 characters!
                         </p>
                     )}
 
@@ -138,7 +142,7 @@ export const CreatePost = () => {
 
                     {contentError && (
                         <p className={styles["field__error"]}>
-                            Content is required!
+                            Content must be atleast 20 characters!
                         </p>
                     )}
 
@@ -160,7 +164,7 @@ export const CreatePost = () => {
 
                     {imageUrlError && (
                         <p className={styles["field__error"]}>
-                            Image Url is required!
+                            Enter a valid Image URL!
                         </p>
                     )}
 
@@ -201,7 +205,10 @@ export const CreatePost = () => {
                             className="button submit"
                             type="submit"
                             disabled={
-                                titleError || contentError || imageUrlError
+                                titleError ||
+                                contentError ||
+                                imageUrlError ||
+                                collectionValError
                             }
                         />
                     </div>

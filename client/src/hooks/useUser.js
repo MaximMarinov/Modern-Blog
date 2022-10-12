@@ -6,7 +6,7 @@ import { useAuth } from "./useAuth";
 
 export const UseUser = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+    const [hasError, setHasError] = useState(false);
     const [data, setData] = useState([]);
     const { uid } = useAuth();
 
@@ -14,10 +14,15 @@ export const UseUser = () => {
     
     useEffect(() => {
         setIsLoading(true);
-        onSnapshot(userRef, (snapshot) => {
-            setData(snapshot?.data());
-        });
+        try {
+            onSnapshot(userRef, (snapshot) => {
+                setIsLoading(false)
+                setData(snapshot?.data());
+            });
+        } catch (error) {
+            setHasError(error)
+        }
     }, []);
 
-    return data;
+    return {data, isLoading, hasError};
 };

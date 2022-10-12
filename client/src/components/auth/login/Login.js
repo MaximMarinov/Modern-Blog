@@ -10,15 +10,19 @@ export const Login = () => {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
-    const navigate = useNavigate()
+    const [loginError, setLoginError] = useState("");
+
+    const navigate = useNavigate();
 
     const { signIn } = useAuth();
 
     const validateEmail = () => {
-        if (!email) {
-            setEmailError(true);
-        } else {
+        const pattern =
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (pattern.test(email)) {
             setEmailError(false);
+        } else {
+            setEmailError(true);
         }
     };
 
@@ -36,12 +40,21 @@ export const Login = () => {
             await signIn(email, password);
             navigate("/profile");
         } catch (e) {
-            console.log(e.message);
+            setLoginError(e.message);
+            if (loginError === "Firebase: Error (auth/user-not-found).") {
+                setLoginError("Wrong Email or Password!");
+            } else if (loginError === "Firebase: Error (auth/wrong-password).") {
+                setLoginError("Wrong Password!");
+            }
         }
     };
 
     return (
         <div className="shell">
+            {loginError && (
+                <p className={styles["field__error"]}>{loginError}</p>
+            )}
+
             <div className={styles["form-box"]}>
                 <form
                     action="POST"
@@ -67,7 +80,7 @@ export const Login = () => {
                         />
                         {emailError && (
                             <p className={styles["field__error"]}>
-                                Email is required!
+                                Enter a valid email address!
                             </p>
                         )}
                     </div>

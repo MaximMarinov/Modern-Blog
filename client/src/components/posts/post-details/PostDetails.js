@@ -7,6 +7,7 @@ import { UseDoc } from "../../../hooks/useDoc";
 import { db } from "../../../firebase-config";
 import { doc } from "firebase/firestore";
 import { useAuth } from "../../../hooks/useAuth";
+import RingLoader from "react-spinners/RingLoader";
 
 export const PostDetails = () => {
     const { collectionPath, postId } = useParams();
@@ -14,45 +15,73 @@ export const PostDetails = () => {
 
     const { user } = useAuth();
 
-    const currentPost = UseDoc(collectionPath, postId);
+    const { data, isLoading, hasError } = UseDoc(collectionPath, postId);
 
     const deleteHandler = () => {
-        const postRef = doc(db, collectionPath, postId);
+        const confirmation = window.confirm(
+            "Are you sure you want to delete this post?"
+        );
 
-        postService.deletePost(postRef);
-        userService.deletePostUser(postRef)
-        navigate(`/posts/${collectionPath}`);
+        if (confirmation) {
+            const postRef = doc(db, collectionPath, postId);
+
+            postService.deletePost(postRef);
+            userService.deletePostUser(postRef);
+            navigate(`/posts/${collectionPath}`);
+        }
     };
 
     return (
-        <section className={styles["section-details"]}>
-            <figure className={styles["section__image"]}>
-                <img src={currentPost.imageUrl} alt={currentPost.title} />
-            </figure>
+        <>
+            {hasError ? (
+                <img
+                    src={require(`../../../images/error-icon.png`)}
+                    alt="error"
+                />
+            ) : (
+                <>
+                    {isLoading ? (
+                        <RingLoader
+                            color={"#ffde59"}
+                            loading={isLoading}
+                            size={150}
+                        />
+                    ) : (
+                        <section className={styles["section-details"]}>
+                            <figure className={styles["section__image"]}>
+                                <img src={data.imageUrl} alt={data.title} />
+                            </figure>
 
-            <div className="shell">
-                <div className={styles["section__content"]}>
-                    <h1>{currentPost.title}</h1>
+                            <div className="shell">
+                                <div className={styles["section__content"]}>
+                                    <h1>{data.title}</h1>
 
-                    <p>{currentPost.content}</p>
+                                    <p>{data.content}</p>
 
-                    <i>{currentPost.author}</i>
-                </div>
+                                    <i>{data.author}</i>
+                                </div>
 
-                {user && user?.uid == currentPost.ownerId ? (
-                    <div className={styles["section__actions"]}>
-                        <Link
-                            className="button"
-                            to={`/edit/${collectionPath}/${postId}`}
-                        >
-                            Edit
-                        </Link>
-                        <a className="button delete" onClick={deleteHandler}>
-                            Delete
-                        </a>
-                    </div>
-                ) : null}
-            </div>
-        </section>
+                                {user && user?.uid == data.ownerId ? (
+                                    <div className={styles["section__actions"]}>
+                                        <Link
+                                            className="button"
+                                            to={`/edit/${collectionPath}/${postId}`}
+                                        >
+                                            Edit
+                                        </Link>
+                                        <a
+                                            className="button delete"
+                                            onClick={deleteHandler}
+                                        >
+                                            Delete
+                                        </a>
+                                    </div>
+                                ) : null}
+                            </div>
+                        </section>
+                    )}
+                </>
+            )}
+        </>
     );
 };

@@ -2,11 +2,12 @@ import styles from "./assets/css/PostList.module.css";
 import { SinglePost } from "./single-post/SinglePost";
 import { Link, useParams } from "react-router-dom";
 import { UseCollection } from "../../hooks/useCollection";
+import RingLoader from "react-spinners/RingLoader";
 
 export const PostList = () => {
     const { collectionPath } = useParams();
 
-    const posts = UseCollection(collectionPath);
+    const { data, isLoading, hasError } = UseCollection(collectionPath);
 
     let title = "";
     let content = "";
@@ -47,36 +48,52 @@ export const PostList = () => {
     }
 
     return (
-        <section className={styles["section-posts"]}>
-            <div className={styles["section__header"]}>
-                <figure className={styles["section__image"]}>
-                    <img
-                        src={require(`../posts/assets/images/${collectionPath}-banner.png`)}
-                        alt="topics-banner"
-                    />
-                </figure>
+        <>
+            {hasError ? (
+                <img src={require(`../../images/error-icon.png`)} alt="error" />
+            ) : (
+                <>
+                    {isLoading ? (
+                        <RingLoader
+                            color={"#ffde59"}
+                            loading={isLoading}
+                            size={150}
+                        />
+                    ) : (
+                        <section className={styles["section-posts"]}>
+                            <div className={styles["section__header"]}>
+                                <figure className={styles["section__image"]}>
+                                    <img
+                                        src={require(`../posts/assets/images/${collectionPath}-banner.png`)}
+                                        alt="topics-banner"
+                                    />
+                                </figure>
 
-                <div className={styles["header__content"]}>
-                    <h1>{title}</h1>
+                                <div className={styles["header__content"]}>
+                                    <h1>{title}</h1>
 
-                    <p>{content}</p>
-                </div>
-            </div>
-            <div className="shell">
-                <ul className={styles["post-list"]}>
-                    {posts.map((post) => {
-                        return (
-                            <Link
-                                to={`/posts/${collectionPath}/${post.id}`}
-                                key={post.id}
-                                className={styles["post"]}
-                            >
-                                <SinglePost post={post} />
-                            </Link>
-                        );
-                    })}
-                </ul>
-            </div>
-        </section>
+                                    <p>{content}</p>
+                                </div>
+                            </div>
+                            <div className="shell">
+                                <ul className={styles["post-list"]}>
+                                    {data.map((post) => {
+                                        return (
+                                            <Link
+                                                to={`/posts/${collectionPath}/${post.id}`}
+                                                key={post.id}
+                                                className={styles["post"]}
+                                            >
+                                                <SinglePost post={post} />
+                                            </Link>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+                        </section>
+                    )}
+                </>
+            )}
+        </>
     );
 };

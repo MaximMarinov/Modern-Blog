@@ -21,7 +21,7 @@ export const EditPost = () => {
     const postRef = doc(db, collectionPath, postId);
 
     const validateTitle = () => {
-        if (!currentPost.title) {
+        if (currentPost.title.lenght < 5) {
             setTitleError(true);
         } else {
             setTitleError(false);
@@ -29,7 +29,7 @@ export const EditPost = () => {
     };
 
     const validateContent = () => {
-        if (!currentPost.content) {
+        if (currentPost.content.lenght < 20) {
             setContentError(true);
         } else {
             setContentError(false);
@@ -37,10 +37,12 @@ export const EditPost = () => {
     };
 
     const validateImageUrl = () => {
-        if (!currentPost.imageUrl) {
-            setImageUrlError(true);
-        } else {
+        const pattern =
+            /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png|webp|avif|gif|svg)/;
+        if (pattern.test(currentPost.imageUrl)) {
             setImageUrlError(false);
+        } else {
+            setImageUrlError(true);
         }
     };
 
@@ -79,7 +81,7 @@ export const EditPost = () => {
                         />
                         {titleError && (
                             <p className={styles["field__error"]}>
-                                Tittle is required!
+                                Title must be atleast 5 characters!
                             </p>
                         )}
                     </div>
@@ -98,7 +100,7 @@ export const EditPost = () => {
                         />
                         {contentError && (
                             <p className={styles["field__error"]}>
-                                Content is required!
+                                Content must be atleast 20 characters!
                             </p>
                         )}
                     </div>
@@ -118,7 +120,7 @@ export const EditPost = () => {
 
                         {imageUrlError && (
                             <p className={styles["field__error"]}>
-                                Image URL is required!
+                                Enter a valid Image URL!
                             </p>
                         )}
                     </div>

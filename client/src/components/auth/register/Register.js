@@ -19,6 +19,8 @@ export const Register = () => {
     const [passwordError, setPasswordError] = useState("");
     const [rePassError, setRePassError] = useState("");
 
+    const [registerError, setRegisterError] = useState("");
+
     const navigate = useNavigate();
 
     const { signUp } = useAuth();
@@ -32,18 +34,22 @@ export const Register = () => {
     };
 
     const validateProfilePicUrl = () => {
-        if (!profilePicUrlError) {
-            setProfilePicUrlError(true);
-        } else {
+        const pattern =
+            /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png|webp|avif|gif|svg)/;
+        if (pattern.test(profilePicUrl)) {
             setProfilePicUrlError(false);
+        } else {
+            setProfilePicUrlError(true);
         }
     };
 
     const validateEmail = () => {
-        if (!email) {
-            setEmailError(true);
-        } else {
+        const pattern =
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (pattern.test(email)) {
             setEmailError(false);
+        } else {
+            setEmailError(true);
         }
     };
 
@@ -56,7 +62,7 @@ export const Register = () => {
     };
 
     const validateRePass = () => {
-        if (!rePass) {
+        if (rePass != password) {
             setRePassError(true);
         } else {
             setRePassError(false);
@@ -75,16 +81,20 @@ export const Register = () => {
         if (password === rePass) {
             try {
                 await signUp(email, password);
-                await userService.registerUser(userData)
+                await userService.registerUser(userData);
                 navigate("/profile");
             } catch (e) {
-                console.log(e.message);
+                setRegisterError(e.message);
             }
         }
     };
 
     return (
         <div className="shell">
+            {registerError && (
+                <p className={styles["field__error"]}>{registerError}</p>
+            )}
+
             <div className={styles["form-box"]}>
                 <form
                     action="POST"
@@ -131,9 +141,9 @@ export const Register = () => {
                             onBlur={validateProfilePicUrl}
                             required
                         />
-                        {nameError && (
+                        {profilePicUrlError && (
                             <p className={styles["field__error"]}>
-                                Profile Picture URL is required!
+                                Enter a valid Profile Picture URL!
                             </p>
                         )}
                     </div>
@@ -153,7 +163,7 @@ export const Register = () => {
                         />
                         {emailError && (
                             <p className={styles["field__error"]}>
-                                Email is required!
+                                Enter a valid email address!
                             </p>
                         )}
                     </div>
@@ -193,7 +203,7 @@ export const Register = () => {
                         />
                         {rePassError && (
                             <p className={styles["field__error"]}>
-                                Password repeat is required!
+                                Passwords don't match!
                             </p>
                         )}
                     </div>

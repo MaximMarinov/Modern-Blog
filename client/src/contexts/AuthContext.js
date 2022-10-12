@@ -16,6 +16,7 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useLocalStorage('auth', {});
     const uid = user?.uid
+    
     // const [userDoc, setUserDoc] = useState({});
 
     const signUp = (email, password) => {
@@ -45,6 +46,7 @@ export const AuthContextProvider = ({ children }) => {
         };
     }, []);
 
+    
     
 
     return (

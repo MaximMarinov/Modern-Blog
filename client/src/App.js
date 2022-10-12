@@ -12,6 +12,7 @@ import { Register } from "./components/auth/register/Register";
 import { NotFound } from "./components/pages/not-found/NotFound";
 import { Profile } from "./components/auth/profile/Profile";
 import { AuthContextProvider } from "./contexts/AuthContext";
+import { PrivateRoute } from "./components/routes/PrivateRoute";
 
 function App() {
     return (
@@ -27,17 +28,19 @@ function App() {
                         element={<PostList />}
                     />
 
-                    <Route
-                        path="/posts/:collectionPath/:postId"
-                        element={<PostDetails />}
-                    />
+                    <Route element={<PrivateRoute />}>
+                        <Route
+                            path="/posts/:collectionPath/:postId"
+                            element={<PostDetails />}
+                        />
 
-                    <Route path="/create" element={<CreatePost />} />
+                        <Route path="/create" element={<CreatePost />} />
 
-                    <Route
-                        path="/edit/:collectionPath/:postId"
-                        element={<EditPost />}
-                    />
+                        <Route
+                            path="/edit/:collectionPath/:postId"
+                            element={<EditPost />}
+                        />
+                    </Route>
 
                     <Route path="/login" element={<Login />} />
 
