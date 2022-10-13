@@ -8,14 +8,23 @@ import { db } from "../../../firebase-config";
 import { doc } from "firebase/firestore";
 import { useAuth } from "../../../hooks/useAuth";
 import RingLoader from "react-spinners/RingLoader";
+import { UseUser } from "../../../hooks/useUser";
+import { useState } from "react";
+import { v4 as uuid } from 'uuid';
+
 
 export const PostDetails = () => {
     const { collectionPath, postId } = useParams();
     const navigate = useNavigate();
-
     const { user } = useAuth();
+    const { currentPost, isLoading, hasError } = UseDoc(collectionPath, postId);
+    const { currentUser } = UseUser();
 
-    const { data, isLoading, hasError } = UseDoc(collectionPath, postId);
+    const [comment, setComment] = useState('');
+
+    const commentId = uuid();
+
+    const postRef = doc(db, collectionPath, postId);
 
     const deleteHandler = () => {
         const confirmation = window.confirm(
@@ -23,12 +32,23 @@ export const PostDetails = () => {
         );
 
         if (confirmation) {
-            const postRef = doc(db, collectionPath, postId);
-
             postService.deletePost(postRef);
-            userService.deletePostUser(postRef);
+            userService.deletePostUser(currentPost);
             navigate(`/posts/${collectionPath}`);
         }
+    };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        postService.addComment(postRef, {
+            id: commentId,
+            content: comment,
+            author: currentUser.name,
+            authorImg: currentUser.profilePicUrl
+        });
+
+        setComment('')
     };
 
     return (
@@ -49,19 +69,82 @@ export const PostDetails = () => {
                     ) : (
                         <section className={styles["section-details"]}>
                             <figure className={styles["section__image"]}>
-                                <img src={data.imageUrl} alt={data.title} />
+                                <img
+                                    src={currentPost.imageUrl}
+                                    alt={currentPost.title}
+                                />
                             </figure>
 
                             <div className="shell">
                                 <div className={styles["section__content"]}>
-                                    <h1>{data.title}</h1>
+                                    <h1>{currentPost.title}</h1>
 
-                                    <p>{data.content}</p>
+                                    <p>{currentPost.content}</p>
 
-                                    <i>{data.author}</i>
+                                    <i>{currentPost.author}</i>
+
+                                    <h1>Comments</h1>
+                                    <ul>
+                                        {currentPost?.comments?.map((c) => {
+                                            return (
+                                                <li key={c.id}>
+                                                    <p>
+                                                        {c.content} -{" "}
+                                                        <strong>
+                                                            {c.author}
+                                                        </strong>
+                                                    </p>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
                                 </div>
 
-                                {user && user?.uid == data.ownerId ? (
+                                {user ? (
+                                    <>
+                                        <div className={styles["form-box"]}>
+                                            <form
+                                                action="POST"
+                                                className={styles["form"]}
+                                                onSubmit={submitHandler}
+                                            >
+                                                <label
+                                                    className={
+                                                        styles["form__label"]
+                                                    }
+                                                    htmlFor="comment"
+                                                >
+                                                    Add Comment
+                                                </label>
+                                                <div
+                                                    className={styles["field"]}
+                                                >
+                                                    <input
+                                                        id="comment"
+                                                        type="text"
+                                                        name="comment"
+                                                        onChange={(e) =>
+                                                            setComment(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        value={comment}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles["form__actions"]
+                                                    }
+                                                >
+                                                    <input type="submit" />
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </>
+                                ) : null}
+
+                                {user?.uid == currentPost.ownerId ? (
                                     <div className={styles["section__actions"]}>
                                         <Link
                                             className="button"

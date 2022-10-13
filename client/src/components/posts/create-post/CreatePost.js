@@ -1,7 +1,7 @@
 import styles from "./assets/css/CreatePost.module.css";
 import { useState } from "react";
 import { auth, db } from "../../../firebase-config";
-import { collection } from "firebase/firestore";
+import { collection, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import * as postService from "../../../services/postsService";
 import * as userService from "../../../services/userService";
@@ -11,7 +11,7 @@ import { UseUser } from "../../../hooks/useUser";
 export const CreatePost = () => {
     const { uid } = useAuth();
 
-    const currentUser = UseUser();
+    const { currentUser } = UseUser();
 
     const [values, setValues] = useState({
         title: "",
@@ -70,8 +70,9 @@ export const CreatePost = () => {
 
     const postData = {
         ...values,
-        author: currentUser.data.name,
+        author: currentUser.name,
         ownerId: uid,
+        comments: [],
     };
 
     const submitHandler = (e) => {
@@ -84,7 +85,14 @@ export const CreatePost = () => {
                 ...postData,
             })
             .then((post) => {
-                userService.addPostToUser(post);
+                const postRef = doc(db, postData.collectionVal, post.id);
+                postService.addPostId(postRef, {
+                    id: post.id,
+                });
+
+                postService.getPost(postRef).then((post) => {
+                    userService.addPostToUser(post);
+                });
             });
 
         return navigate(`/posts/${values.collectionVal}`);

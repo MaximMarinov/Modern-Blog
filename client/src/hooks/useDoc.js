@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import * as postService from "../services/postsService";
 import { db } from "../firebase-config";
-import { doc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 export const UseDoc = (collectionPath, postId) => {
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
-    const [data, setData] = useState([]);
+    const [currentPost, setCurrentPost] = useState([]);
 
     const postRef = doc(db, collectionPath, postId);
 
     useEffect(() => {
         setIsLoading(true);
         try {
-            postService.getPost(postRef).then((doc) => {
+            onSnapshot(postRef, (snapshot) => {
                 setIsLoading(false)
-                setData(doc)
+                setCurrentPost(snapshot?.data());
             });
         } catch (error) {
             setHasError(error)
@@ -23,5 +23,5 @@ export const UseDoc = (collectionPath, postId) => {
         
     }, [collectionPath, postId]);
 
-    return {data, isLoading, hasError};
+    return {currentPost, isLoading, hasError};
 };

@@ -7,7 +7,7 @@ import { useAuth } from "./useAuth";
 export const UseUser = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
-    const [data, setData] = useState([]);
+    const [currentUser, setCurrentUser] = useState([]);
     const { uid } = useAuth();
 
     const userRef = doc(db, "users", uid);
@@ -17,12 +17,12 @@ export const UseUser = () => {
         try {
             onSnapshot(userRef, (snapshot) => {
                 setIsLoading(false)
-                setData(snapshot?.data());
+                setCurrentUser(snapshot?.data());
             });
         } catch (error) {
             setHasError(error)
         }
     }, []);
 
-    return {data, isLoading, hasError};
+    return {currentUser, isLoading, hasError};
 };

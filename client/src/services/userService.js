@@ -72,3 +72,4 @@ export const deletePostUser = async (data) => {
         posts: arrayRemove(data),
     });
 };
+

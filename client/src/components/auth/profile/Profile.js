@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../../../hooks/useAuth";
+import { useState } from "react";
 import { UseUser } from "../../../hooks/useUser";
-import * as postService from "../../../services/postsService";
 import { EditUser } from "../edit-user/EditUser";
 import RingLoader from "react-spinners/RingLoader";
+import { SinglePost } from "../../posts/single-post/SinglePost";
+import styles from "./assets/css/Profile.module.css";
+import { Link } from "react-router-dom";
 
 export const Profile = () => {
-    const { data, isLoading, hasError } = UseUser();
+    const { currentUser, isLoading, hasError } = UseUser();
     const [editMode, setEditMode] = useState();
 
     const editModeToggle = () => {
@@ -34,15 +35,44 @@ export const Profile = () => {
                                 <EditUser editModeToggle={editModeToggle} />
                             ) : (
                                 <>
-                                    <img src={data.profilePicUrl} alt="" />
-                                    <h1>Hi, {data.name}</h1>
-                                    <h2>Email: {data.email}</h2>
-                                    {data.posts?.length > 0 ? (
-                                        <p>Posts: {data.posts?.length}</p>
-                                    ) : null}
+                                    <img
+                                        src={currentUser.profilePicUrl}
+                                        alt=""
+                                    />
+
+                                    <h1>Hi, {currentUser.name}</h1>
+
+                                    <h2>Email: {currentUser.email}</h2>
+
                                     <button onClick={editModeToggle}>
                                         Edit Profile
                                     </button>
+
+                                    {currentUser.posts ? (
+                                        <div className="shell">
+                                            <ul className={styles["post-list"]}>
+                                                {currentUser.posts?.map(
+                                                    (post) => {
+                                                        return (
+                                                            <Link
+                                                                to={`/posts/${post.collectionVal}/${post.id}`}
+                                                                key={post.id}
+                                                                className={
+                                                                    styles[
+                                                                        "post"
+                                                                    ]
+                                                                }
+                                                            >
+                                                                <SinglePost
+                                                                    post={post}
+                                                                />
+                                                            </Link>
+                                                        );
+                                                    }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    ) : null}
                                 </>
                             )}
                         </>

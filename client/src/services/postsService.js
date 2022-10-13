@@ -4,6 +4,10 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
+    arrayUnion,
+    FieldValue,
+    increment,
+    documentId,
 } from "firebase/firestore";
 import { auth } from "../firebase-config";
 
@@ -31,3 +35,13 @@ export const editPost = async (postRef, data) => {
 export const deletePost = async (postRef) => {
     await deleteDoc(postRef);
 };
+
+export const addComment = async (postRef, data) => {
+    await updateDoc(postRef, {
+        comments: arrayUnion(data)
+    });
+};
+
+export const addPostId = async (postRef, data) => {
+    await updateDoc(postRef, data);
+}
