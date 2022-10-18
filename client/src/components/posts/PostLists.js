@@ -55,26 +55,24 @@ export const PostList = () => {
                 <>
                     {isLoading ? (
                         <RingLoader
-                            color={"#ffde59"}
-                            loading={isLoading}
-                            size={150}
+                            color={'#000'}
                         />
                     ) : (
                         <section className={styles["section-posts"]}>
-                            <div className={styles["section__header"]}>
-                                <figure className={styles["section__image"]}>
-                                    <img
-                                        src={require(`../posts/assets/images/${collectionPath}-banner.png`)}
-                                        alt="topics-banner"
-                                    />
-                                </figure>
-
-                                <div className={styles["header__content"]}>
-                                    <h1>{title}</h1>
-
-                                    <p>{content}</p>
+                            <header className="header">
+                                <div className="overlay">
+                                    <h1 className="subtitle">{content}</h1>
+                                    <h1 className="title">{title}</h1>
                                 </div>
-                            </div>
+                                <div className="shape">
+                                    <svg viewBox="0 0 1500 200">
+                                        <path d="m 0,240 h 1500.4828 v -71.92164 c 0,0 -286.2763,-81.79324 -743.19024,-81.79324 C 300.37862,86.28512 0,168.07836 0,168.07836 Z" />
+                                    </svg>
+                                </div>
+                                <div className="mouse-icon">
+                                    <div className="wheel"></div>
+                                </div>
+                            </header>
                             <div className="shell">
                                 <ul className={styles["post-list"]}>
                                     {data.map((post) => {

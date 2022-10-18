@@ -10,8 +10,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import RingLoader from "react-spinners/RingLoader";
 import { UseUser } from "../../../hooks/useUser";
 import { useState } from "react";
-import { v4 as uuid } from 'uuid';
-
+import { v4 as uuid } from "uuid";
 
 export const PostDetails = () => {
     const { collectionPath, postId } = useParams();
@@ -20,7 +19,7 @@ export const PostDetails = () => {
     const { currentPost, isLoading, hasError } = UseDoc(collectionPath, postId);
     const { currentUser } = UseUser();
 
-    const [comment, setComment] = useState('');
+    const [comment, setComment] = useState("");
 
     const commentId = uuid();
 
@@ -45,10 +44,10 @@ export const PostDetails = () => {
             id: commentId,
             content: comment,
             author: currentUser.name,
-            authorImg: currentUser.profilePicUrl
+            authorImg: currentUser.profilePicUrl,
         });
 
-        setComment('')
+        setComment("");
     };
 
     return (
@@ -61,11 +60,16 @@ export const PostDetails = () => {
             ) : (
                 <>
                     {isLoading ? (
-                        <RingLoader
-                            color={"#ffde59"}
-                            loading={isLoading}
-                            size={150}
-                        />
+                        <div id="js-preloader" className="js-preloader">
+                            <div className="preloader-inner">
+                                <span className="dot"></span>
+                                <div className="dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
                     ) : (
                         <section className={styles["section-details"]}>
                             <figure className={styles["section__image"]}>

@@ -4,6 +4,102 @@ import { Link } from "react-router-dom";
 export const Home = () => {
     return (
         <>
+            <header className="header">
+                <div className="overlay">
+                    <h1 className="subtitle">
+                        CRUD Operations, Authentication, Authorization, Firebase
+                        Back-End
+                    </h1>
+                    <h1 className="title">Modern Blog</h1>
+                </div>
+                <div className="shape">
+                    <svg viewBox="0 0 1500 200">
+                        <path d="m 0,240 h 1500.4828 v -71.92164 c 0,0 -286.2763,-81.79324 -743.19024,-81.79324 C 300.37862,86.28512 0,168.07836 0,168.07836 Z" />
+                    </svg>
+                </div>
+                <div className="mouse-icon">
+                    <div className="wheel"></div>
+                </div>
+            </header>
+            <section id="service" className="section pt-0">
+                <div className="container">
+                    <h6 className="section-title text-center">Our Service</h6>
+                    <h6 className="section-subtitle text-center mb-5 pb-3">
+                        Voluptates architecto provident deserunt.
+                    </h6>
+
+                    <div className="row">
+                        <div className="col-md-4">
+                            <Link
+                                className="card mb-4 mb-md-0"
+                                to={"/posts/topics"}
+                            >
+                                <div className="card-body">
+                                    <small className="text-primary font-weight-bold">
+                                        01
+                                    </small>
+                                    <h5 className="card-title mt-3">Topics</h5>
+                                    <p className="mb-0">
+                                        Lorem ipsum dolor sit amet, cquasi
+                                        cupiditate voluptate debitis saepe
+                                        dolorem totam dolor repudiandae quo
+                                        nihil, repellendus nesciunt ab fuga
+                                        quae, minima reprehenderit sequi fugit.
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="col-md-4">
+                            <Link
+                                className="card mb-4 mb-md-0"
+                                to={"/posts/research"}
+                            >
+                                <div className="card-body">
+                                    <small className="text-primary font-weight-bold">
+                                        Research
+                                    </small>
+                                    <h5 className="card-title mt-3">
+                                        Research
+                                    </h5>
+                                    <p className="mb-0">
+                                        Lorem ipsum dolor sit amet, cquasi
+                                        cupiditate voluptate debitis saepe
+                                        dolorem totam dolor repudiandae quo
+                                        nihil, repellendus nesciunt ab fuga
+                                        quae, minima reprehenderit sequi fugit.
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="col-md-4">
+                            <Link
+                                className="card mb-4 mb-md-0"
+                                to={"/posts/ideas"}
+                            >
+                                <div className="card-body">
+                                    <small className="text-primary font-weight-bold">
+                                        03
+                                    </small>
+                                    <h5 className="card-title mt-3">Ideas</h5>
+                                    <p className="mb-0">
+                                        Lorem ipsum dolor sit amet, cquasi
+                                        cupiditate voluptate debitis saepe
+                                        dolorem totam dolor repudiandae quo
+                                        nihil, repellendus nesciunt ab fuga
+                                        quae, minima reprehenderit sequi fugit.
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </>
+    );
+};
+
+{
+    /* <>
             <section className={styles["section-hero"]}>
                 <div className={styles["section__inner"]}>
                     <figure className={styles["section__image"]}>
@@ -108,6 +204,5 @@ export const Home = () => {
                     </ul>
                 </div>
             </section>
-        </>
-    );
-};
+        </> */
+}

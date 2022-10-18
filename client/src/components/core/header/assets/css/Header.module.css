@@ -1,4 +1,4 @@
-.header {
+/* .header {
     background-color: #000;
 }
 
@@ -41,8 +41,9 @@
 
 .logo {
     display: inline-block;
-    width: 100px;
     padding-right: 30px;
+    height: 80px;
+    min-width: 110px
 }
 
 .logo img {
@@ -51,3 +52,8 @@
     display: block;
     object-fit: cover;
 }
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .header a {
+        font-size: 13px;
+    }
+} */
