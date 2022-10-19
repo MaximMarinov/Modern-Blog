@@ -27,7 +27,7 @@ export const PostDetails = () => {
 
     const override = {
         display: "block",
-        margin: "250px auto 250px",
+        margin: "40vh auto 50vh",
     };
 
     const deleteHandler = () => {
@@ -91,90 +91,144 @@ export const PostDetails = () => {
                             </header>
 
                             <div className="shell">
-                                <div className={styles["section__content"]}>
-                                    <h1>{currentPost.title}</h1>
+                                <div className="container">
+                                    <div className={styles["section__content"]}>
+                                        <div
+                                            className={styles["post__details"]}
+                                        >
+                                            <h1>{currentPost.title}</h1>
 
-                                    <p>{currentPost.content}</p>
-
-                                    <i>{currentPost.author}</i>
-
-                                    <h1>Comments</h1>
-                                    <ul>
-                                        {currentPost?.comments?.map((c) => {
-                                            return (
-                                                <li key={c.id}>
-                                                    <p>
-                                                        {c.content} -{" "}
-                                                        <strong>
-                                                            {c.author}
-                                                        </strong>
-                                                    </p>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </div>
-
-                                {user ? (
-                                    <>
-                                        <div className={styles["form-box"]}>
-                                            <form
-                                                action="POST"
-                                                className={styles["form"]}
-                                                onSubmit={submitHandler}
+                                            <p
+                                                className={
+                                                    styles["post__content"]
+                                                }
                                             >
-                                                <label
-                                                    className={
-                                                        styles["form__label"]
-                                                    }
-                                                    htmlFor="comment"
-                                                >
-                                                    Add Comment
-                                                </label>
-                                                <div
-                                                    className={styles["field"]}
-                                                >
-                                                    <input
-                                                        id="comment"
-                                                        type="text"
-                                                        name="comment"
-                                                        onChange={(e) =>
-                                                            setComment(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        value={comment}
-                                                        required
-                                                    />
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles["form__actions"]
-                                                    }
-                                                >
-                                                    <input type="submit" />
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </>
-                                ) : null}
+                                                {currentPost.content}
+                                            </p>
 
-                                {user?.uid == currentPost.ownerId ? (
-                                    <div className={styles["section__actions"]}>
-                                        <Link
-                                            className="button"
-                                            to={`/edit/${collectionPath}/${postId}`}
-                                        >
-                                            Edit
-                                        </Link>
-                                        <a
-                                            className="button delete"
-                                            onClick={deleteHandler}
-                                        >
-                                            Delete
-                                        </a>
+                                            <i
+                                                className={
+                                                    styles["post__author"]
+                                                }
+                                            >
+                                                {currentPost.author}
+                                            </i>
+                                        </div>
+
+                                        <ul className={styles["comments"]}>
+                                            {currentPost?.comments?.map((c) => {
+                                                return (
+                                                    <li
+                                                        key={c.id}
+                                                        className={
+                                                            styles["comment"]
+                                                        }
+                                                    >
+                                                        <figure
+                                                            className={
+                                                                styles[
+                                                                    "author-image"
+                                                                ]
+                                                            }
+                                                        >
+                                                            <img
+                                                                src={
+                                                                    c.authorImg
+                                                                }
+                                                                alt={c.author}
+                                                            />
+                                                        </figure>
+
+                                                        <div
+                                                            className={
+                                                                styles[
+                                                                    "comment-content"
+                                                                ]
+                                                            }
+                                                        >
+                                                            <strong>
+                                                                {c.author}
+                                                            </strong>
+                                                            
+                                                            <p>{c.content}</p>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
                                     </div>
-                                ) : null}
+
+                                    {user ? (
+                                        <>
+                                            <div className={styles["form-box"]}>
+                                                <form
+                                                    action="POST"
+                                                    className={styles["form"]}
+                                                    onSubmit={submitHandler}
+                                                >
+                                                    <div className="form-group">
+                                                        <input
+                                                            className={
+                                                                styles[
+                                                                    "form-control"
+                                                                ]
+                                                            }
+                                                            placeholder="Add Comment"
+                                                            id="comment"
+                                                            type="text"
+                                                            name="comment"
+                                                            onChange={(e) =>
+                                                                setComment(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                            value={comment}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles[
+                                                                "form__actions"
+                                                            ]
+                                                        }
+                                                    >
+                                                        <input
+                                                            type="submit"
+                                                            className={
+                                                                styles[
+                                                                    "button-submit"
+                                                                ]
+                                                            }
+                                                        />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </>
+                                    ) : null}
+
+                                    {user?.uid == currentPost.ownerId ? (
+                                        <div
+                                            className={
+                                                styles["section__actions"]
+                                            }
+                                        >
+                                            <Link
+                                                className="button"
+                                                to={`/edit/${collectionPath}/${postId}`}
+                                            >
+                                                Edit
+                                            </Link>
+                                            <a
+                                                className="button delete"
+                                                onClick={deleteHandler}
+                                            >
+                                                Delete
+                                            </a>
+                                        </div>
+                                    ) : null}
+                                </div>
                             </div>
                         </section>
                     )}

@@ -16,7 +16,7 @@ export const Profile = () => {
 
     const override = {
         display: "block",
-        margin: "250px auto 250px",
+        margin: "40vh auto 50vh",
     };
 
     return (
