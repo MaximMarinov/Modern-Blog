@@ -19,13 +19,6 @@
     margin-bottom: 20px;
 }
 
-.section__actions {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .post__content {
     font-size: 18px;
 }
@@ -106,4 +99,49 @@
 
 .comment-content {
     text-align: left;
+}
+
+.section__actions {
+    margin-top: 20px;
+    display: flex;
+}
+
+.button-edit {
+    min-width: 150px;
+    margin: auto;
+    display: block;
+    background-color: #fff;
+    color: #ffee00;
+    border: 2px #ffee00 solid;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: 0.2s;
+    text-decoration: none;
+}
+
+.button-edit:hover {
+    background-color: #ffee00;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.button-delete {
+    min-width: 150px;
+    margin: auto;
+    display: block;
+    background-color: #fff;
+    color: #ff0000;
+    border: 2px #ff0000 solid;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: 0.2s;
+    text-decoration: none;
+}
+
+.button-delete:hover {
+    background-color: #ff0000;
+    color: #fff;
+    transition: 0.2s;
 }

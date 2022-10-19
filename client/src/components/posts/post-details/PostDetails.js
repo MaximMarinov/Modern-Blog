@@ -113,6 +113,30 @@ export const PostDetails = () => {
                                             >
                                                 {currentPost.author}
                                             </i>
+
+                                            {user?.uid ==
+                                            currentPost.ownerId ? (
+                                                <div
+                                                    className={
+                                                        styles[
+                                                            "section__actions"
+                                                        ]
+                                                    }
+                                                >
+                                                    <Link
+                                                        className={styles['button-edit']}
+                                                        to={`/edit/${collectionPath}/${postId}`}
+                                                    >
+                                                        Edit
+                                                    </Link>
+                                                    <button
+                                                        className={styles['button-delete']}
+                                                        onClick={deleteHandler}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            ) : null}
                                         </div>
 
                                         <ul className={styles["comments"]}>
@@ -149,7 +173,7 @@ export const PostDetails = () => {
                                                             <strong>
                                                                 {c.author}
                                                             </strong>
-                                                            
+
                                                             <p>{c.content}</p>
                                                         </div>
                                                     </li>
@@ -206,27 +230,6 @@ export const PostDetails = () => {
                                                 </form>
                                             </div>
                                         </>
-                                    ) : null}
-
-                                    {user?.uid == currentPost.ownerId ? (
-                                        <div
-                                            className={
-                                                styles["section__actions"]
-                                            }
-                                        >
-                                            <Link
-                                                className="button"
-                                                to={`/edit/${collectionPath}/${postId}`}
-                                            >
-                                                Edit
-                                            </Link>
-                                            <a
-                                                className="button delete"
-                                                onClick={deleteHandler}
-                                            >
-                                                Delete
-                                            </a>
-                                        </div>
                                     ) : null}
                                 </div>
                             </div>
