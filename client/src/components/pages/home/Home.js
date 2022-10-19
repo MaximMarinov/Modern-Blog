@@ -23,9 +23,9 @@ export const Home = () => {
             </header>
             <section id="service" className="section pt-0">
                 <div className="container">
-                    <h6 className="section-title text-center">Our Service</h6>
+                    <h6 className="section-title text-center">Post Categories</h6>
                     <h6 className="section-subtitle text-center mb-5 pb-3">
-                        Voluptates architecto provident deserunt.
+                        Find what can grab your attention
                     </h6>
 
                     <div className="row">
@@ -34,17 +34,18 @@ export const Home = () => {
                                 className="card mb-4 mb-md-0"
                                 to={"/posts/topics"}
                             >
+                                <figure>
+                                    <img
+                                        className="card-img"
+                                        src={require("./assets/images/topics.jpg")}
+                                        alt=""
+                                    />
+                                </figure>
                                 <div className="card-body">
-                                    <small className="text-primary font-weight-bold">
-                                        01
-                                    </small>
                                     <h5 className="card-title mt-3">Topics</h5>
                                     <p className="mb-0">
-                                        Lorem ipsum dolor sit amet, cquasi
-                                        cupiditate voluptate debitis saepe
-                                        dolorem totam dolor repudiandae quo
-                                        nihil, repellendus nesciunt ab fuga
-                                        quae, minima reprehenderit sequi fugit.
+                                        Here you can read about different
+                                        topics!
                                     </p>
                                 </div>
                             </Link>
@@ -54,19 +55,20 @@ export const Home = () => {
                                 className="card mb-4 mb-md-0"
                                 to={"/posts/research"}
                             >
+                                <figure>
+                                    <img
+                                        className="card-img"
+                                        src={require("./assets/images/research.jpg")}
+                                        alt=""
+                                    />
+                                </figure>
                                 <div className="card-body">
-                                    <small className="text-primary font-weight-bold">
-                                        Research
-                                    </small>
                                     <h5 className="card-title mt-3">
                                         Research
                                     </h5>
                                     <p className="mb-0">
-                                        Lorem ipsum dolor sit amet, cquasi
-                                        cupiditate voluptate debitis saepe
-                                        dolorem totam dolor repudiandae quo
-                                        nihil, repellendus nesciunt ab fuga
-                                        quae, minima reprehenderit sequi fugit.
+                                        Find out about the latest inovations in
+                                        every sphere!
                                     </p>
                                 </div>
                             </Link>
@@ -76,17 +78,18 @@ export const Home = () => {
                                 className="card mb-4 mb-md-0"
                                 to={"/posts/ideas"}
                             >
+                                <figure>
+                                    <img
+                                        className="card-img"
+                                        src={require("./assets/images/ideas.jpg")}
+                                        alt=""
+                                    />
+                                </figure>
+
                                 <div className="card-body">
-                                    <small className="text-primary font-weight-bold">
-                                        03
-                                    </small>
                                     <h5 className="card-title mt-3">Ideas</h5>
                                     <p className="mb-0">
-                                        Lorem ipsum dolor sit amet, cquasi
-                                        cupiditate voluptate debitis saepe
-                                        dolorem totam dolor repudiandae quo
-                                        nihil, repellendus nesciunt ab fuga
-                                        quae, minima reprehenderit sequi fugit.
+                                        Some interesting concepts...
                                     </p>
                                 </div>
                             </Link>

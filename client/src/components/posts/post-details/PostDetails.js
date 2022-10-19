@@ -25,6 +25,11 @@ export const PostDetails = () => {
 
     const postRef = doc(db, collectionPath, postId);
 
+    const override = {
+        display: "block",
+        margin: "250px auto 250px",
+    };
+
     const deleteHandler = () => {
         const confirmation = window.confirm(
             "Are you sure you want to delete this post?"
@@ -60,24 +65,30 @@ export const PostDetails = () => {
             ) : (
                 <>
                     {isLoading ? (
-                        <div id="js-preloader" className="js-preloader">
-                            <div className="preloader-inner">
-                                <span className="dot"></span>
-                                <div className="dots">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                        </div>
+                        <RingLoader
+                            color={"#0032A0"}
+                            cssOverride={override}
+                            size={200}
+                        />
                     ) : (
                         <section className={styles["section-details"]}>
-                            <figure className={styles["section__image"]}>
-                                <img
-                                    src={currentPost.imageUrl}
-                                    alt={currentPost.title}
-                                />
-                            </figure>
+                            <header
+                                className="header"
+                                style={{
+                                    backgroundImage: `url(${currentPost.imageUrl})`,
+                                    height: `50%`,
+                                }}
+                            >
+                                <div
+                                    className="overlay"
+                                    style={{ background: `rgba(0, 0, 0, 0.4)` }}
+                                ></div>
+                                <div className="shape">
+                                    <svg viewBox="0 0 1500 200">
+                                        <path d="m 0,240 h 1500.4828 v -71.92164 c 0,0 -286.2763,-81.79324 -743.19024,-81.79324 C 300.37862,86.28512 0,168.07836 0,168.07836 Z" />
+                                    </svg>
+                                </div>
+                            </header>
 
                             <div className="shell">
                                 <div className={styles["section__content"]}>

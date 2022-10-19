@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import styles from "./assets/css/Header.module.css";
-
+import logo from './assets/images/logo.svg'
 export const Header = () => {
     const { user, uid, logout } = useAuth();
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ export const Header = () => {
             >
                 <div className="container">
                     <Link className="navbar-brand" to="/">
-                        <img src="assets/imgs/logo.svg" alt="" />
+                        <img src={logo} alt="" />
                     </Link>
                     <button
                         className="navbar-toggler ml-auto"

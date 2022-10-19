@@ -7,6 +7,7 @@ import * as postService from "../../../services/postsService";
 import * as userService from "../../../services/userService";
 import { useAuth } from "../../../hooks/useAuth";
 import { UseUser } from "../../../hooks/useUser";
+import addImage from "./assets/images/add.jpg";
 
 export const CreatePost = () => {
     const { uid } = useAuth();
@@ -100,127 +101,141 @@ export const CreatePost = () => {
 
     return (
         <div className="shell">
-            <div className={styles["form-box"]}>
-                <form
-                    action="POST"
-                    className={styles["form"]}
-                    onSubmit={submitHandler}
+            <header
+                className="header"
+                style={{
+                    height: `50%`,
+                    background: `url(${addImage})`,
+                }}
+            >
+                <div
+                    className="overlay"
+                    style={{ background: `rgba(0, 0, 0, 0.4)` }}
                 >
-                    <div className={styles["form__head"]}>
-                        <h1>Add Post</h1>
-                    </div>
+                    <h1 className="title">Add Post</h1>
+                </div>
+                <div className="shape">
+                    <svg viewBox="0 0 1500 200">
+                        <path d="m 0,240 h 1500.4828 v -71.92164 c 0,0 -286.2763,-81.79324 -743.19024,-81.79324 C 300.37862,86.28512 0,168.07836 0,168.07836 Z" />
+                    </svg>
+                </div>
+            </header>
 
-                    <label className={styles["form__label"]} htmlFor="title">
-                        Title
-                    </label>
-                    <div className={styles["field"]}>
-                        <input
-                            id="title"
-                            type="text"
-                            name="title"
-                            placeholder="Title"
-                            onChange={changeHandler}
-                            value={values.title}
-                            onBlur={validateTitle}
-                            required
-                        />
-                    </div>
-
-                    {titleError && (
-                        <p className={styles["field__error"]}>
-                            Title must be atleast 5 characters!
-                        </p>
-                    )}
-
-                    <label className={styles["form__label"]} htmlFor="content">
-                        Content
-                    </label>
-                    <div className={styles["field"]}>
-                        <input
-                            id="content"
-                            type="text"
-                            name="content"
-                            placeholder="Content"
-                            onChange={changeHandler}
-                            value={values.content}
-                            onBlur={validateContent}
-                            required
-                        />
-                    </div>
-
-                    {contentError && (
-                        <p className={styles["field__error"]}>
-                            Content must be atleast 20 characters!
-                        </p>
-                    )}
-
-                    <label className={styles["form__label"]} htmlFor="imageUrl">
-                        Image URL
-                    </label>
-                    <div className={styles["field"]}>
-                        <input
-                            id="imageUrl"
-                            type="text"
-                            name="imageUrl"
-                            placeholder="Image Url"
-                            onChange={changeHandler}
-                            value={values.imageUrl}
-                            onBlur={validateImageUrl}
-                            required
-                        />
-                    </div>
-
-                    {imageUrlError && (
-                        <p className={styles["field__error"]}>
-                            Enter a valid Image URL!
-                        </p>
-                    )}
-
-                    <label
-                        className={styles["form__label"]}
-                        htmlFor="collectionVal"
+            <div className="container">
+                <div className={styles["form-box"]}>
+                    <form
+                        action="POST"
+                        className={styles["form"]}
+                        onSubmit={submitHandler}
                     >
-                        Collection
-                    </label>
-                    <div className={styles["field"]}>
-                        <select
-                            id="collectionVal"
-                            type="text"
-                            name="collectionVal"
-                            placeholder="Image Url"
-                            onChange={changeHandler}
-                            value={values.collectionVal}
-                            onBlur={validateCollectionVal}
-                            required
-                        >
-                            <option value="" disabled={true}>
-                                Select collection
-                            </option>
-                            <option value="topics">Topics</option>
-                            <option value="ideas">Ideas</option>
-                            <option value="research">Research</option>
-                        </select>
-                    </div>
+                        <div className="form-group">
+                            <input
+                                className={styles["form-control"]}
+                                id="title"
+                                type="text"
+                                name="title"
+                                placeholder="Title"
+                                onChange={changeHandler}
+                                value={values.title}
+                                onBlur={validateTitle}
+                                required
+                            />
+                        </div>
 
-                    {collectionValError && (
-                        <p className={styles["field__error"]}>
-                            Specify collection!
-                        </p>
-                    )}
+                        {titleError && (
+                            <p className={styles["field__error"]}>
+                                Title must be atleast 5 characters!
+                            </p>
+                        )}
 
-                    <div className={styles["form__actions"]}>
-                        <input
-                            className="button submit"
-                            type="submit"
-                            disabled={
-                                titleError ||
-                                contentError ||
-                                imageUrlError ||
-                                collectionValError
-                            }
-                        />
-                    </div>
-                </form>
+                        <div className="form-group">
+                            <input
+                                className={styles["form-control"]}
+                                id="content"
+                                type="text"
+                                name="content"
+                                placeholder="Content"
+                                onChange={changeHandler}
+                                value={values.content}
+                                onBlur={validateContent}
+                                required
+                            />
+                        </div>
+
+                        {contentError && (
+                            <p className={styles["field__error"]}>
+                                Content must be atleast 20 characters!
+                            </p>
+                        )}
+
+                        <div className="form-group">
+                            <input
+                                className={styles["form-control"]}
+                                id="imageUrl"
+                                type="text"
+                                name="imageUrl"
+                                placeholder="Image Url"
+                                onChange={changeHandler}
+                                value={values.imageUrl}
+                                onBlur={validateImageUrl}
+                                required
+                            />
+                        </div>
+
+                        {imageUrlError && (
+                            <p className={styles["field__error"]}>
+                                Enter a valid Image URL!
+                            </p>
+                        )}
+
+                        <div className="dropdown d-inline-block">
+                            <select
+                                className={styles["form-control"]}
+                                id="collectionVal"
+                                type="text"
+                                name="collectionVal"
+                                placeholder="Image Url"
+                                onChange={changeHandler}
+                                value={values.collectionVal}
+                                onBlur={validateCollectionVal}
+                                required
+                            >
+                                <option value="" disabled={true}>
+                                    Select collection
+                                </option>
+                                <option value="topics">Topics</option>
+                                <option value="ideas">Ideas</option>
+                                <option value="research">Research</option>
+                            </select>
+                        </div>
+
+                        {collectionValError && (
+                            <p className={styles["field__error"]}>
+                                Specify collection!
+                            </p>
+                        )}
+
+                        <div className={styles["form__actions"]}>
+                            <input
+                                className={
+                                    titleError ||
+                                    contentError ||
+                                    imageUrlError ||
+                                    collectionValError
+                                        ? styles["button-disabled"]
+                                        : styles["button-submit"]
+                                }
+                                type="submit"
+                                disabled={
+                                    titleError ||
+                                    contentError ||
+                                    imageUrlError ||
+                                    collectionValError
+                                }
+                            />
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );

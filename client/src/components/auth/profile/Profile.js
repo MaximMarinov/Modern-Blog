@@ -14,6 +14,11 @@ export const Profile = () => {
         setEditMode(!editMode);
     };
 
+    const override = {
+        display: "block",
+        margin: "250px auto 250px",
+    };
+
     return (
         <>
             {hasError ? (
@@ -24,59 +29,88 @@ export const Profile = () => {
             ) : (
                 <>
                     {isLoading ? (
-                        <div id="js-preloader" className="js-preloader">
-                            <div className="preloader-inner">
-                                <span className="dot"></span>
-                                <div className="dots">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                        </div>
+                        <RingLoader
+                            color={"#0032A0"}
+                            cssOverride={override}
+                            size={200}
+                        />
                     ) : (
                         <>
                             {editMode ? (
                                 <EditUser editModeToggle={editModeToggle} />
                             ) : (
                                 <>
-                                    <img
-                                        src={currentUser.profilePicUrl}
-                                        alt=""
-                                    />
+                                    <header
+                                        className="header"
+                                        style={{
+                                            backgroundImage: `url(${currentUser.profilePicUrl})`,
+                                            height: `50%`,
+                                        }}
+                                    >
+                                        <div
+                                            className="overlay"
+                                            style={{
+                                                background: `rgba(0, 0, 0, 0.4)`,
+                                            }}
+                                        >
+                                            <h1 className="title">
+                                                Hi, {currentUser.name}
+                                            </h1>
 
-                                    <h1>Hi, {currentUser.name}</h1>
+                                            <button
+                                                onClick={editModeToggle}
+                                                className={
+                                                    styles["button-submit"]
+                                                }
+                                            >
+                                                Edit Profile
+                                            </button>
+                                        </div>
 
-                                    <h2>Email: {currentUser.email}</h2>
-
-                                    <button onClick={editModeToggle}>
-                                        Edit Profile
-                                    </button>
+                                        <div className="shape">
+                                            <svg viewBox="0 0 1500 200">
+                                                <path d="m 0,240 h 1500.4828 v -71.92164 c 0,0 -286.2763,-81.79324 -743.19024,-81.79324 C 300.37862,86.28512 0,168.07836 0,168.07836 Z" />
+                                            </svg>
+                                        </div>
+                                    </header>
 
                                     {currentUser.posts ? (
-                                        <div className="shell">
-                                            <ul className={styles["post-list"]}>
-                                                {currentUser.posts?.map(
-                                                    (post) => {
-                                                        return (
-                                                            <Link
-                                                                to={`/posts/${post.collectionVal}/${post.id}`}
-                                                                key={post.id}
-                                                                className={
-                                                                    styles[
-                                                                        "post"
-                                                                    ]
-                                                                }
-                                                            >
-                                                                <SinglePost
-                                                                    post={post}
-                                                                />
-                                                            </Link>
-                                                        );
-                                                    }
-                                                )}
-                                            </ul>
-                                        </div>
+                                        <section
+                                            id="service"
+                                            className="section pt-0"
+                                        >
+                                            <div className="container">
+                                                <h6 className="section-title text-center">
+                                                    My Posts
+                                                </h6>
+
+                                                <div className="row">
+                                                    {currentUser.posts?.map(
+                                                        (post) => {
+                                                            return (
+                                                                <div
+                                                                    className="col-md-4"
+                                                                    key={
+                                                                        post.id
+                                                                    }
+                                                                >
+                                                                    <Link
+                                                                        className="card mb-4 mb-md-0"
+                                                                        to={`/posts/${post.collectionVal}/${post.id}`}
+                                                                    >
+                                                                        <SinglePost
+                                                                            post={
+                                                                                post
+                                                                            }
+                                                                        />
+                                                                    </Link>
+                                                                </div>
+                                                            );
+                                                        }
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </section>
                                     ) : null}
                                 </>
                             )}
