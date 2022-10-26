@@ -58,3 +58,8 @@
     border: 2px #0032a0 solid;
     transition: 0.2s;
 }
+
+.no-posts {
+    text-align: center;
+    height: 21vh;
+}

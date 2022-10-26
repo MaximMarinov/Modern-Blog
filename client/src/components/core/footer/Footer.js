@@ -6,7 +6,8 @@ export const Footer = () => {
         <section id="contact" className="section has-img-bg pb-0">
             <div className="container">
                 {/* Page Footer */}
-                <footer className="mt-5 py-4 border-top border-secondary">
+
+                <footer className="py-4 border-top border-secondary">
                     <p className="mb-0 small">
                         &copy; Modern Blog | All rights reserved.
                     </p>

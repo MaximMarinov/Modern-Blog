@@ -111,7 +111,11 @@ export const Profile = () => {
                                                 </div>
                                             </div>
                                         </section>
-                                    ) : null}
+                                    ) : (
+                                        <div className={styles['no-posts']}>
+                                            <h1>No posts yet...</h1>
+                                        </div>
+                                    )}
                                 </>
                             )}
                         </>

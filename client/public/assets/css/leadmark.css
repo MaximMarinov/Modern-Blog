@@ -219,6 +219,9 @@ pre {
 
 figure {
     margin: 0 0 1rem;
+    aspect-ratio: 16/9;
+    height: 300px;
+    width: 100%;
 }
 
 img {
@@ -5352,7 +5355,7 @@ input[type="button"].btn-block {
     text-decoration: none;
     color: #000134;
     text-align: center;
-    transition: .2s
+    transition: .2s;
 }
 
 .card:hover {
@@ -5460,6 +5463,9 @@ input[type="button"].btn-block {
 .card-img {
     width: 100%;
     border-radius: calc(0 - 1px);
+    object-fit: cover;
+    height: 100%;
+    display: block;
 }
 
 .card-img-top {
@@ -12171,4 +12177,8 @@ textarea.form-control {
     left: 50%;
     opacity: 1;
     visibility: visible;
+}
+
+.card.mb-4.mb-md-0 {
+    height: 100%;
 }
